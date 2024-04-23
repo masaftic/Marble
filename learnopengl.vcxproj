@@ -137,6 +137,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\core\player.cpp" />
     <ClCompile Include="src\level\gameLevel.cpp" />
     <ClCompile Include="src\resource\resourceManager.cpp" />
     <ClCompile Include="src\graphics\cubeRenderer.cpp" />
@@ -160,6 +161,7 @@
     <ClInclude Include="include\EBO.h" />
     <ClInclude Include="include\game.h" />
     <ClInclude Include="include\gameLevel.h" />
+    <ClInclude Include="include\player.h" />
     <ClInclude Include="include\resourceManager.h" />
     <ClInclude Include="include\shaderClass.h" />
     <ClInclude Include="include\cubeRenderer.h" />

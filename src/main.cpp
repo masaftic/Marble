@@ -25,6 +25,7 @@ int main()
     // Tell GLFW we are using the CORE profile
     // So that means we only have the modern functions
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+   //  glfwWindowHint(GLFW_SAMPLES, 4);
 
     // Create a GLFWwindow object of width by height pixels, naming it "Marble"
     GLFWwindow* window = glfwCreateWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "Marble", NULL, NULL);
@@ -49,6 +50,7 @@ int main()
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     glEnable(GL_DEPTH_TEST);
+    // glEnable(GL_MULTISAMPLE);
 
     Marble.Init();
 
