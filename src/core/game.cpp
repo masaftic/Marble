@@ -46,32 +46,7 @@ void Game::ProcessInput(GLFWwindow* window, float dt)
 {
 	if (this->State == GAME_ACTIVE)
 	{
-		camera->Inputs(window);
-		float length = glm::length(player->Pos - camera->Position);
-		std::cout << length << '\n';
-
-		/*glm::vec2 direction = glm::vec2(player->Pos.x, player->Pos.z) - glm::vec2(camera->Position.x, camera->Position.z);
-
-		std::cout << direction.x << " " << direction.y << ' ';
-
-		direction = glm::normalize(direction);
-
-		
-		std::cout << direction.x << " " << direction.y << ' ';
-
-		float length = glm::length(player->Pos - camera->Position);
-		std::cout << length << '\n';
-
-		if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
-		{
-			player->Pos.x += (direction.x) * 0.01f;
-			player->Pos.z += (direction.y) * 0.01f;
-		}
-		if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
-		{
-			player->Pos.x -= (direction.x) * 0.01f;
-			player->Pos.z -= (direction.y) * 0.01f;
-		}*/
+		camera->Inputs(window, dt);
 	}
 }
 
@@ -85,7 +60,7 @@ void Game::Render()
 	Shader shader = ResourceManager::GetShader("cube");
 	shader.Use();
 	camera->UpdateMatrix(45.0f, 0.1f, 100.0f);
-	camera->Matrix(shader, "camMatrix");
+	camera->SetMatrix(shader, "camMatrix");
 
 	Texture texture = ResourceManager::GetTexture("block_solid");
 
