@@ -1,10 +1,11 @@
 #include "camera.h"
 
-Camera::Camera(int width, int height, glm::vec3 position)
+Camera::Camera(int width, int height, glm::vec3 position, Player* player)
 {
 	this->width    = width;
 	this->height   = height;
 	this->Position = position;
+	this->player   = player;
 }
 
 void Camera::SetMatrix(Shader& shader, const char* uniform)
@@ -18,7 +19,7 @@ void Camera::UpdateMatrix(float FOVdeg, float nearPlane, float farPlane)
 	glm::mat4 view = glm::mat4(1.0f);
 	glm::mat4 proj = glm::mat4(1.0f);
 
-	view = glm::lookAt(Position, player->Pos, Up);
+	view = glm::lookAt(Position, player->Position, Up);
 
 	proj = glm::perspective(glm::radians(FOVdeg), (float)(width / height), nearPlane, farPlane);
 
@@ -26,25 +27,7 @@ void Camera::UpdateMatrix(float FOVdeg, float nearPlane, float farPlane)
 }
 
 void Camera::Inputs(GLFWwindow* window, float dt)
-{
-	float horizontalDistance = CalculateHorizontalDistance();
-	float verticalDistance = CalculateVerticalDistance();
-	CalculateCameraPos(horizontalDistance, verticalDistance);
-	
-
-	glm::vec3 direction = glm::vec3(player->Pos.x, 0.0f, player->Pos.z) - glm::vec3(Position.x, 0.0f, Position.z);
-	direction = glm::normalize(direction);
-
-	if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
-	{
-		player->Pos += speed * direction;
-	}
-
-	if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
-	{
-		player->Pos -= speed * direction;
-	}
-
+{	
 	// Handles key inputs
 	if (glfwGetKey(window, GLFW_KEY_E) == GLFW_PRESS)
 	{
@@ -54,22 +37,7 @@ void Camera::Inputs(GLFWwindow* window, float dt)
 	{
 		this->distanceFromPlayer -= this->speed;
 	}
-	if (glfwGetKey(window, GLFW_KEY_LEFT_CONTROL) == GLFW_PRESS)
-	{
-		this->pitch -= this->speed;
-	}
-	if (glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS)
-	{
-		this->pitch += this->speed;
-	}
-	if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
-	{
-		this->angleAroundPlayer -= this->speed * 0.1f;
-	}
-	if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
-	{
-		this->angleAroundPlayer += this->speed * 0.1f;
-	}
+
 	if (glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS)
 	{
 		speed = 0.04f;
@@ -78,9 +46,6 @@ void Camera::Inputs(GLFWwindow* window, float dt)
 	{
 		speed = 0.01f;
 	}
-
-	/*
-
 	// Handles mouse inputs
 	if (glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_LEFT) == GLFW_PRESS)
 	{
@@ -102,20 +67,13 @@ void Camera::Inputs(GLFWwindow* window, float dt)
 
 		// Normalizes and shifts the coordinates of the cursor such that they begin in the middle of the screen
 		// and then "transforms" them into degrees 
-		float rotX = sensitivity * (float)(mouseY - (height / 2)) / height;
-		float rotY = sensitivity * (float)(mouseX - (width / 2)) / width;
+		float rotY = sensitivity * (float)(mouseY - (height / 2)) / height;
+		float rotX = sensitivity * (float)(mouseX - (width / 2)) / width;
 
-		// Calculates upcoming vertical change in the Orientation
-		glm::vec3 newOrientation = glm::rotate(Orientation, glm::radians(-rotX), glm::normalize(glm::cross(Orientation, Up)));
-
-		// Decides whether or not the next vertical Orientation is legal or not
-		if (abs(glm::angle(newOrientation, Up) - glm::radians(90.0f)) <= glm::radians(85.0f))
-		{
-			Orientation = newOrientation;
+		if (abs(this->pitch + rotY) <= 85) {
+			this->pitch += rotY;
 		}
-
-		// Rotates the Orientation left and right
-		Orientation = glm::rotate(Orientation, glm::radians(-rotY), Up);
+		this->angleAroundPlayer += -rotX * speed * 0.7f;
 
 		// Sets mouse cursor to the middle of the screen so that it doesn't end up roaming around
 		glfwSetCursorPos(window, (width / 2), (height / 2));
@@ -127,7 +85,10 @@ void Camera::Inputs(GLFWwindow* window, float dt)
 		// Makes sure the next time the camera looks around it doesn't jump
 		firstClick = true;
 	}
-	*/
+	
+	float horizontalDistance = CalculateHorizontalDistance();
+	float verticalDistance = CalculateVerticalDistance();
+	CalculateCameraPos(horizontalDistance, verticalDistance);
 }
 
 float Camera::CalculateHorizontalDistance()
@@ -146,8 +107,8 @@ void Camera::CalculateCameraPos(float horizontalDistance, float verticalDistance
 
 	float offsetX = horizontalDistance * glm::sin(theta);
 	float offsetZ = horizontalDistance * glm::cos(theta);
-	Position.x = player->Pos.x - offsetX;
-	Position.z = player->Pos.z - offsetZ;
-	Position.y = player->Pos.y + verticalDistance;
+	Position.x = player->Position.x - offsetX;
+	Position.z = player->Position.z - offsetZ;
+	Position.y = player->Position.y + verticalDistance;
 }
 

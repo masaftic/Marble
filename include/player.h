@@ -2,10 +2,28 @@
 
 #include <glm/glm.hpp>
 
-class Player
-{
+class Player {
 public:
-	glm::vec3 Pos;
+    glm::vec3 Position;
+    glm::vec3 Direction;
+    glm::vec3 Velocity;
 
-	Player(glm::vec3 pos);
+    float Speed;
+    float MaxSpeed;
+    float Acceleration;
+    float Friction;
+    float JumpStrength;
+
+    bool IsGrounded;
+
+    Player(glm::vec3 position);
+
+    void MoveForward();
+    void MoveBackward();
+    void StrafeLeft();
+    void StrafeRight();
+
+    void Jump();
+
+    void Update(float deltaTime);
 };
