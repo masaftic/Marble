@@ -7,7 +7,6 @@ public:
     glm::vec3 Position;
     glm::vec3 Direction;
     glm::vec3 Velocity;
-    glm::vec3 RotationAxis;
     
     float Rotation;
     float Speed;
@@ -17,6 +16,7 @@ public:
     float JumpStrength;
 
     bool IsGrounded;
+
 
     Player(glm::vec3 position);
 
@@ -30,4 +30,8 @@ public:
     void Jump();
 
     void Update(float deltaTime);
+
+private:
+    int RotationDirection = 1;
+
 };
