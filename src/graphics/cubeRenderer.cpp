@@ -12,12 +12,13 @@ CubeRenderer::~CubeRenderer()
     this->cubeVAO.Delete();
 }
 
-void CubeRenderer::DrawCube(Texture& texture, glm::vec3 position, glm::vec3 size, float rotate, glm::vec3 color)
+void CubeRenderer::DrawCube(Texture& texture, glm::vec3 position, glm::vec3 size, glm::vec3 rotationAxis, float rotate, glm::vec3 color)
 {
     this->shader.Use();
 
     glm::mat4 model = glm::mat4(1.0f);
     model = glm::translate(model, position);
+    model = glm::rotate(model, rotate, rotationAxis);
     model = glm::scale(model, size);
 
     this->shader.setMat4("model", model);

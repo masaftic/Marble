@@ -7,7 +7,9 @@ public:
     glm::vec3 Position;
     glm::vec3 Direction;
     glm::vec3 Velocity;
-
+    glm::vec3 RotationAxis;
+    
+    float Rotation;
     float Speed;
     float MaxSpeed;
     float Acceleration;
@@ -17,6 +19,8 @@ public:
     bool IsGrounded;
 
     Player(glm::vec3 position);
+
+    float GetSpeed();
 
     void MoveForward();
     void MoveBackward();

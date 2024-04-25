@@ -6,6 +6,7 @@
 #include <resourceManager.h>
 #include <gameLevel.h>
 #include <GLFW/glfw3.h>
+#include <iomanip>
 
 CubeRenderer* Renderer;
 
@@ -47,31 +48,33 @@ void Game::Init()
 void Game::ProcessInput(GLFWwindow* window, float dt)
 {
 	if (this->State == GAME_ACTIVE)
-	{
-		// camera direction
+	{	
 		glm::vec3 cameraDirection = glm::vec3(player->Position.x, 0.0f, player->Position.z) - glm::vec3(camera->Position.x, 0.0f, camera->Position.z);
-		player->Direction = glm::normalize(cameraDirection);
 
 		if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
 		{
+			player->Direction = glm::normalize(cameraDirection);
 			player->MoveForward();
 		}
 		if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
 		{
+			player->Direction = glm::normalize(cameraDirection);
 			player->MoveBackward();
 		}
 		if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
 		{
+			player->Direction = glm::normalize(cameraDirection);
 			player->StrafeRight();
 		}
 		if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
 		{
+			player->Direction = glm::normalize(cameraDirection);
 			player->StrafeLeft();
-
-		}		
+		}
 		camera->Inputs(window, dt);
 	}
 }
+
 
 void Game::Update(float dt)
 {
@@ -92,7 +95,7 @@ void Game::Render()
 	Renderer->DrawCube(texture, glm::vec3(30.0f, 0.0f, 0.0f), glm::vec3(30.0f, 1.0f, 30.0f));
 	Renderer->DrawCube(texture, glm::vec3(0.0f, 0.0f, 30.0f), glm::vec3(30.0f, 1.0f, 30.0f));
 
-
-	Renderer->DrawCube(texture2, player->Position, glm::vec3(10.0f, 10.0f, 10.0f));
+	Renderer->DrawCube(texture2, player->Position, glm::vec3(10.0f, 10.0f, 10.0f), glm::cross(player->Direction, glm::vec3(0.0f, 1.0f, 0.0f)), player->Rotation, glm::vec3(0.7f, 0.6f, 0.7f));
+	
 }
 
