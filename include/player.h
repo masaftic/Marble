@@ -2,6 +2,7 @@
 
 #include <glm/glm.hpp>
 #include <sphere.h>
+#include <texture.h>
 
 class Player {
 public:
@@ -33,10 +34,9 @@ public:
 
     void Update(float deltaTime);
 
-    void Draw();
+    void Draw(Texture& texture);
 
 private:
-    int RotationDirection = 1;
     Shader sphereShader;
     Sphere* sphere;
 };

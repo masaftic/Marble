@@ -18,33 +18,24 @@ float Player::GetSpeed()
 
 void Player::MoveForward() 
 {
-    RotationDirection = 1;
-
     Velocity += Direction * Acceleration;
 }
 
 void Player::MoveBackward() 
 {
-    RotationDirection = -1;
     Velocity -= Direction * Acceleration;
 }
 
 void Player::StrafeLeft() 
 {
-    RotationDirection = 1;
     glm::vec3 right = glm::cross(Direction, glm::vec3(0.0f, 1.0f, 0.0f));
     Velocity -= glm::normalize(right) * Acceleration;
-    this->Direction = -right;
 }
 
 void Player::StrafeRight() 
 {
-    RotationDirection = 1;
-
     glm::vec3 right = glm::cross(Direction, glm::vec3(0.0f, 1.0f, 0.0f));
     Velocity += glm::normalize(right) * Acceleration;
-    this->Direction = right;
-
 }
 
 void Player::Jump() 
@@ -68,7 +59,7 @@ void Player::Update(float deltaTime)
     // Update position based on velocity
     Position += Velocity * deltaTime;
 
-    if (this->GetSpeed() > 0) Rotation -= RotationDirection * this->GetSpeed() * deltaTime;
+    if (this->GetSpeed() > 0) Rotation -= this->GetSpeed() * deltaTime;
 
     // making sure rotation doesn't get too big to overflow
     Rotation = fmod(Rotation, 2 * 3.14159f);
@@ -80,17 +71,17 @@ void Player::Update(float deltaTime)
     //}
 }
 
-void Player::Draw()
+void Player::Draw(Texture& texture)
 {
     this->sphereShader.Use();
 
     glm::mat4 model = glm::mat4(1.0f);
     model = glm::translate(model, this->Position);
-    model = glm::rotate(model, this->Rotation, glm::cross(this->Direction, glm::vec3(0.0f, 1.0f, 0.0f)));
+    model = glm::rotate(model, this->Rotation, glm::cross(glm::normalize(this->Velocity), glm::vec3(0.0f, 1.0f, 0.0f)));
     // model = glm::scale(model, this->sphere->radius);
 
     this->sphereShader.setMat4("model", model);
-    this->sphereShader.setVec3("color", glm::vec3(1.0f, 0.2f, 0.4f));
+    this->sphereShader.setVec3("color", glm::vec3(0.8f, 0.2f, 0.4f));
 
 
     glActiveTexture(GL_TEXTURE0);

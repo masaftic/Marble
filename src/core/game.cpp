@@ -33,7 +33,7 @@ void Game::Init()
 	// load shaders
 	Shader shader = ResourceManager::LoadShader("resources/shaders/default.vert", "resources/shaders/default.frag", "cube");
 	
-	player = new Player(glm::vec3(0.0f, 1.0f, 0.0f), shader);
+	player = new Player(glm::vec3(0.0f, 1.5f, 0.0f), shader);
 	camera = new Camera(this->Width, this->Height, glm::vec3(0.0f, 0.0f, 2.0f), player);
 	// sphere = new Sphere(shader);
 
@@ -43,6 +43,7 @@ void Game::Init()
 	//// load textures
 	ResourceManager::LoadTexture("resources/textures/block_solid.png", false, "block_solid");
 	ResourceManager::LoadTexture("resources/textures/block.png", false, "block");
+	
 	
 	//// load levels
 	
@@ -82,7 +83,10 @@ void Game::ProcessInput(GLFWwindow* window, float dt)
 void Game::Update(float dt)
 {
 	player->Update(dt);
-	// std::cout << player->Rotation << '\n';
+	
+	auto v = player->Velocity;
+	std::cout << std::setprecision(2) << std::fixed;
+	std::cout << v.x << " " << v.y << " " << v.z << '\n';
 }
 
 void Game::Render()
@@ -95,11 +99,13 @@ void Game::Render()
 
 	Texture texture2 = ResourceManager::GetTexture("block");
 	Texture texture = ResourceManager::GetTexture("block_solid");
+
 	Renderer->DrawCube(texture, glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(5.0f, 1.0f, 5.0f));
 	Renderer->DrawCube(texture, glm::vec3(5.0f, 0.0f, 0.0f), glm::vec3(5.0f, 1.0f, 5.0f));
 	Renderer->DrawCube(texture, glm::vec3(0.0f, 0.0f, 5.0f), glm::vec3(5.0f, 1.0f, 5.0f));
+	Renderer->DrawCube(texture, glm::vec3(5.0f, 0.0f, 5.0f), glm::vec3(5.0f, 1.0f, 5.0f));
 
-	player->Draw();
+	player->Draw(texture);
 	// Renderer->DrawCube(texture2, player->Position, glm::vec3(10.0f, 10.0f, 10.0f), glm::cross(player->Direction, glm::vec3(0.0f, 1.0f, 0.0f)), player->Rotation, glm::vec3(0.7f, 0.6f, 0.7f));
 	
 }

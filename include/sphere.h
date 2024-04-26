@@ -6,12 +6,6 @@
 #include <EBO.h>
 #include <shaderClass.h>
 
-/*
-
-reference:
-	https://www.songho.ca/opengl/gl_sphere.html
-
-*/
 
 
 const float PI = 3.1415926;
