@@ -2,7 +2,7 @@
 #include <glm/glm.hpp>
 
 
-Player::Player(glm::vec3 position, Shader sphereShader) : Speed(0.0f), MaxSpeed(10.0f), Acceleration(0.02f), Friction(0.999f), JumpStrength(10.0f), IsGrounded(false), Rotation(0.0f)
+Player::Player(glm::vec3 position, Shader sphereShader) : Speed(0.0f), MaxSpeed(10.0f), Acceleration(0.015f), Friction(0.999f), JumpStrength(10.0f), IsGrounded(false), Rotation(0.0f)
 {
     this->Position = position;
     this->Direction = glm::vec3(1.0f, 0, 1.0f);
@@ -59,7 +59,7 @@ void Player::Update(float deltaTime)
     // Update position based on velocity
     Position += Velocity * deltaTime;
 
-    if (this->GetSpeed() > 0) Rotation -= this->GetSpeed() * deltaTime;
+    Rotation -= this->GetSpeed() * deltaTime;
 
     // making sure rotation doesn't get too big to overflow
     Rotation = fmod(Rotation, 2 * 3.14159f);
@@ -85,7 +85,7 @@ void Player::Draw(Texture& texture)
 
 
     glActiveTexture(GL_TEXTURE0);
-    // texture.Bind();
+    texture.Bind();
 
 
     sphere->Draw();

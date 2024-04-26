@@ -10,7 +10,6 @@ public:
     glm::vec3 Direction;
     glm::vec3 Velocity;
     
-    float radius;
     float Rotation;
     float Speed;
     float MaxSpeed;
