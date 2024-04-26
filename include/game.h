@@ -29,6 +29,8 @@ public:
 	void Init();
 	void ProcessInput(GLFWwindow* window, float dt);
 	void Update(float dt);
+
+	void UpdateResolution(int width, int height);
 	void Render();
 
 };

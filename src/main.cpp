@@ -9,7 +9,7 @@
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void key_callback(GLFWwindow* window, int key, int scancode, int action, int mode);
 
-const unsigned int SCREEN_WIDTH  = 800;
+const unsigned int SCREEN_WIDTH  = 1000;
 const unsigned int SCREEN_HEIGHT = 800;
 
 Game Marble(SCREEN_WIDTH, SCREEN_HEIGHT);
@@ -127,6 +127,8 @@ void framebuffer_size_callback(GLFWwindow* window, int width, int height)
 {
     // make sure the viewport matches the new window dimensions; note that width and 
     // height will be significantly larger than specified on retina displays.
+
+    Marble.UpdateResolution(width, height);
     glViewport(0, 0, width, height);
 }
 

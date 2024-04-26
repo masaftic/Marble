@@ -28,6 +28,15 @@ Game::~Game()
 	delete camera;
 }
 
+void Game::UpdateResolution(int width, int height)
+{
+	this->Width = Width;
+	this->Height = Height;
+	camera->width = width;
+	camera->height = height;
+}
+
+
 void Game::Init()
 {
 	// load shaders
@@ -88,6 +97,7 @@ void Game::Update(float dt)
 	std::cout << std::setprecision(2) << std::fixed;
 	std::cout << v.x << " " << v.y << " " << v.z << '\n';
 }
+
 
 void Game::Render()
 {
