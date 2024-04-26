@@ -18,7 +18,7 @@ public:
 	glm::vec3 Position;
 	float pitch = 20;
 	float yaw = -90;
-	float distanceFromPlayer = 50;
+	float distanceFromPlayer = 10;
 	float angleAroundPlayer = 0;
 
 	glm::vec3 Orientation = glm::vec3(0.0f, 0.0f, -1.0f);

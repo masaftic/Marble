@@ -7,12 +7,14 @@
 #include <gameLevel.h>
 #include <GLFW/glfw3.h>
 #include <iomanip>
+#include <sphere.h>
+
 
 CubeRenderer* Renderer;
 
 Camera* camera;
 Player* player;
-
+Sphere* sphere;
 
 Game::Game(unsigned int width, unsigned int height) : Height(height), Width(width), State(GAME_ACTIVE), Keys()
 {
@@ -31,8 +33,9 @@ void Game::Init()
 	// load shaders
 	Shader shader = ResourceManager::LoadShader("resources/shaders/default.vert", "resources/shaders/default.frag", "cube");
 	
-	player = new Player(glm::vec3(0.0f, 20.0f, 0.0f));
-	camera = new Camera(this->Width, this->Height, glm::vec3(0.0f, 4.0f, 2.0f), player);
+	player = new Player(glm::vec3(0.0f, 1.0f, 0.0f), shader);
+	camera = new Camera(this->Width, this->Height, glm::vec3(0.0f, 0.0f, 2.0f), player);
+	// sphere = new Sphere(shader);
 
 	// set renderer controls
 	Renderer = new CubeRenderer(shader);
@@ -79,23 +82,25 @@ void Game::ProcessInput(GLFWwindow* window, float dt)
 void Game::Update(float dt)
 {
 	player->Update(dt);
+	// std::cout << player->Rotation << '\n';
 }
 
 void Game::Render()
 {
-	Shader shader = ResourceManager::GetShader("cube");
-	shader.Use();
+	Shader cubeShader = ResourceManager::GetShader("cube");
+
+	cubeShader.Use();
 	camera->UpdateMatrix(45.0f, 0.1f, 100.0f);
-	camera->SetMatrix(shader, "camMatrix");
+	camera->SetMatrix(cubeShader, "camMatrix");
 
-	Texture texture = ResourceManager::GetTexture("block_solid");
 	Texture texture2 = ResourceManager::GetTexture("block");
+	Texture texture = ResourceManager::GetTexture("block_solid");
+	Renderer->DrawCube(texture, glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(5.0f, 1.0f, 5.0f));
+	Renderer->DrawCube(texture, glm::vec3(5.0f, 0.0f, 0.0f), glm::vec3(5.0f, 1.0f, 5.0f));
+	Renderer->DrawCube(texture, glm::vec3(0.0f, 0.0f, 5.0f), glm::vec3(5.0f, 1.0f, 5.0f));
 
-	Renderer->DrawCube(texture, glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(30.0f, 1.0f, 30.0f));
-	Renderer->DrawCube(texture, glm::vec3(30.0f, 0.0f, 0.0f), glm::vec3(30.0f, 1.0f, 30.0f));
-	Renderer->DrawCube(texture, glm::vec3(0.0f, 0.0f, 30.0f), glm::vec3(30.0f, 1.0f, 30.0f));
-
-	Renderer->DrawCube(texture2, player->Position, glm::vec3(10.0f, 10.0f, 10.0f), glm::cross(player->Direction, glm::vec3(0.0f, 1.0f, 0.0f)), player->Rotation, glm::vec3(0.7f, 0.6f, 0.7f));
+	player->Draw();
+	// Renderer->DrawCube(texture2, player->Position, glm::vec3(10.0f, 10.0f, 10.0f), glm::cross(player->Direction, glm::vec3(0.0f, 1.0f, 0.0f)), player->Rotation, glm::vec3(0.7f, 0.6f, 0.7f));
 	
 }
 

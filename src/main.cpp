@@ -1,4 +1,5 @@
 #include<iostream>
+#include<sstream>
 #include<glad/glad.h>
 #include<GLFW/glfw3.h>
 
@@ -56,16 +57,38 @@ int main()
 
     float deltaTime = 0.0f;
     float lastFrame = 0.0f;
+
+    int frameCount = 0;
+    float lastTime = glfwGetTime();
     
+
     // Main while loop
     while (!glfwWindowShouldClose(window))
     {
         float currentFrame = glfwGetTime();
         deltaTime = currentFrame - lastFrame;
         lastFrame = currentFrame;
+
+
+        frameCount++;
+        float deltaFps = currentFrame - lastTime;
+        if (deltaFps >= 1.0f) {
+            float fps = frameCount / deltaFps;
+
+            std::stringstream ss;
+            ss << " [" << fps << " FPS]";
+
+            glfwSetWindowTitle(window, ss.str().c_str());
+
+            frameCount = 0;
+            lastTime = currentFrame;
+        }
+
         // make sure delta time doesn't get too big
         if (deltaTime > 0.15f)
             deltaTime = 0.15f;
+
+
 
         glfwPollEvents();
 

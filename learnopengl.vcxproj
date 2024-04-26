@@ -137,6 +137,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\graphics\sphere.cpp" />
     <ClCompile Include="src\core\player.cpp" />
     <ClCompile Include="src\level\gameLevel.cpp" />
     <ClCompile Include="src\resource\resourceManager.cpp" />
@@ -165,6 +166,7 @@
     <ClInclude Include="include\resourceManager.h" />
     <ClInclude Include="include\shaderClass.h" />
     <ClInclude Include="include\cubeRenderer.h" />
+    <ClInclude Include="include\sphere.h" />
     <ClInclude Include="include\texture.h" />
     <ClInclude Include="include\VAO.h" />
     <ClInclude Include="include\VBO.h" />
