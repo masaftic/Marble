@@ -1,7 +1,7 @@
 #include "sphere.h"
 #include "glm/glm.hpp"
 
-Sphere::Sphere(Shader& shader) : radius(1.0f), sectorCount(40), stackCount(24)
+Sphere::Sphere(Shader& shader) : radius(1.0f), sectorCount(72), stackCount(48)
 {
 	this->radius = radius;
 	this->sectorCount = sectorCount;
@@ -53,7 +53,7 @@ void Sphere::Init()
 	}
 
 	// Calculate texture coordinates for each vertex
-	for (size_t i = 0; i < this->vertices.size() / 3 - 2; ++i) {
+	for (size_t i = 0; i < this->vertices.size() / 3 - 2; i++) {
 		glm::vec3 vertex = glm::vec3(vertices[i], vertices[i + 1], vertices[i + 2]);
 
 		// Calculate spherical coordinates

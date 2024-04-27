@@ -172,8 +172,10 @@
     <ClInclude Include="include\VBO.h" />
   </ItemGroup>
   <ItemGroup>
+    <Image Include="resources\textures\black_circle.png" />
     <Image Include="resources\textures\block.png" />
     <Image Include="resources\textures\block_solid.png" />
+    <Image Include="resources\textures\spiral.png" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="resources\levels\level1.txt" />
