@@ -120,6 +120,12 @@
     <Image Include="resources\textures\block_solid.png">
       <Filter>Resource Files</Filter>
     </Image>
+    <Image Include="resources\textures\spiral.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="resources\textures\black_circle.png">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
     <Text Include="resources\levels\level1.txt" />

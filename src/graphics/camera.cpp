@@ -29,11 +29,11 @@ void Camera::UpdateMatrix(float FOVdeg, float nearPlane, float farPlane)
 void Camera::Inputs(GLFWwindow* window, float dt)
 {	
 	// Handles key inputs
-	if (glfwGetKey(window, GLFW_KEY_E) == GLFW_PRESS)
+	if (glfwGetKey(window, GLFW_KEY_Q) == GLFW_PRESS)
 	{
 		this->distanceFromPlayer += this->speed;
 	}
-	if (glfwGetKey(window, GLFW_KEY_Q) == GLFW_PRESS)
+	if (glfwGetKey(window, GLFW_KEY_E) == GLFW_PRESS)
 	{
 		this->distanceFromPlayer -= this->speed;
 	}

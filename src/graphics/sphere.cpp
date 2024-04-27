@@ -1,7 +1,7 @@
 #include "sphere.h"
 #include "glm/glm.hpp"
 
-Sphere::Sphere(Shader& shader) : radius(1.0f), sectorCount(40), stackCount(24)
+Sphere::Sphere(Shader& shader) : radius(1.0f), sectorCount(72), stackCount(48)
 {
 	this->radius = radius;
 	this->sectorCount = sectorCount;
@@ -25,9 +25,9 @@ void Sphere::Init()
 			float yPos = this->radius * std::cos(ySegment * PI);
 			float zPos = this->radius * std::sin(xSegment * 2 * PI) * std::sin(ySegment * PI);
 
-			this->vertices.push_back(xPos);
 			this->vertices.push_back(yPos);
 			this->vertices.push_back(zPos);
+			this->vertices.push_back(xPos);
 
 			/*this->vertices.push_back(xSegment);
 			this->vertices.push_back(ySegment);
@@ -53,7 +53,7 @@ void Sphere::Init()
 	}
 
 	// Calculate texture coordinates for each vertex
-	for (size_t i = 0; i < this->vertices.size() / 3 - 2; ++i) {
+	for (size_t i = 0; i < this->vertices.size() / 3 - 2; i++) {
 		glm::vec3 vertex = glm::vec3(vertices[i], vertices[i + 1], vertices[i + 2]);
 
 		// Calculate spherical coordinates
