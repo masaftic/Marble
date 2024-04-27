@@ -78,7 +78,6 @@ void Player::Draw(Texture& texture)
     glm::mat4 model = glm::mat4(1.0f);
     model = glm::translate(model, this->Position);
     model = glm::rotate(model, this->Rotation, glm::cross(glm::normalize(this->Velocity), glm::vec3(0.0f, 1.0f, 0.0f)));
-    // model = glm::scale(model, this->sphere->radius);
 
     this->sphereShader.setMat4("model", model);
     this->sphereShader.setVec3("color", glm::vec3(0.8f, 0.2f, 0.4f));
