@@ -51,7 +51,6 @@ void Game::Init()
 
 	//// load textures
 	ResourceManager::LoadTexture("resources/textures/block_solid.png", false, "block_solid");
-	ResourceManager::LoadTexture("resources/textures/block.png", false, "block");
 	
 	
 	//// load levels
@@ -107,13 +106,13 @@ void Game::Render()
 	camera->UpdateMatrix(45.0f, 0.1f, 100.0f);
 	camera->SetMatrix(cubeShader, "camMatrix");
 
-	Texture texture = ResourceManager::GetTexture("block");
+
 	Texture block_solid = ResourceManager::GetTexture("block_solid");
 
-	Renderer->DrawCube(texture, glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(5.0f, 1.0f, 5.0f));
-	Renderer->DrawCube(texture, glm::vec3(5.0f, 0.0f, 0.0f), glm::vec3(5.0f, 1.0f, 5.0f));
-	Renderer->DrawCube(texture, glm::vec3(0.0f, 0.0f, 5.0f), glm::vec3(5.0f, 1.0f, 5.0f));
-	Renderer->DrawCube(texture, glm::vec3(5.0f, 0.0f, 5.0f), glm::vec3(5.0f, 1.0f, 5.0f));
+	Renderer->DrawCube(block_solid, glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(5.0f, 1.0f, 5.0f));
+	Renderer->DrawCube(block_solid, glm::vec3(5.0f, 0.0f, 0.0f), glm::vec3(5.0f, 1.0f, 5.0f));
+	Renderer->DrawCube(block_solid, glm::vec3(0.0f, 0.0f, 5.0f), glm::vec3(5.0f, 1.0f, 5.0f));
+	Renderer->DrawCube(block_solid, glm::vec3(5.0f, 0.0f, 5.0f), glm::vec3(5.0f, 1.0f, 5.0f));
 
 	player->Draw(block_solid);
 	// Renderer->DrawCube(texture2, player->Position, glm::vec3(10.0f, 10.0f, 10.0f), glm::cross(player->Direction, glm::vec3(0.0f, 1.0f, 0.0f)), player->Rotation, glm::vec3(0.7f, 0.6f, 0.7f));
