@@ -1,7 +1,7 @@
 #include "sphere.h"
 #include "glm/glm.hpp"
 
-Sphere::Sphere(Shader& shader) : radius(1.0f), sectorCount(72), stackCount(48)
+Sphere::Sphere(Shader& shader) : radius(1.0f), sectorCount(50), stackCount(40)
 {
 	this->radius = radius;
 	this->sectorCount = sectorCount;
@@ -21,20 +21,13 @@ void Sphere::Init()
 		{
 			float xSegment = (float)x / (float)this->sectorCount;
 			float ySegment = (float)y / (float)this->stackCount;
-			float xPos = this->radius * std::cos(xSegment * 2 * PI) * std::sin(ySegment * PI); // TAU is 2PI
+			float xPos = this->radius * std::cos(xSegment * 2 * PI) * std::sin(ySegment * PI);
 			float yPos = this->radius * std::cos(ySegment * PI);
 			float zPos = this->radius * std::sin(xSegment * 2 * PI) * std::sin(ySegment * PI);
 
+			this->vertices.push_back(xPos);
 			this->vertices.push_back(yPos);
 			this->vertices.push_back(zPos);
-			this->vertices.push_back(xPos);
-
-			/*this->vertices.push_back(xSegment);
-			this->vertices.push_back(ySegment);
-
-			this->vertices.push_back(xPos);
-			this->vertices.push_back(yPos);
-			this->vertices.push_back(zPos);*/
 		}
 	}
 
@@ -98,6 +91,5 @@ void Sphere::Draw()
 
 	this->vao.Bind();
 	glDrawElements(GL_TRIANGLES, (unsigned int)this->indices.size(), GL_UNSIGNED_INT, 0);
-	 //glDrawElements(GL_TRIANGLES, (unsigned int)this->indices.size(), GL_UNSIGNED_INT, (void*)0);
 }
 
