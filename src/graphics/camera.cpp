@@ -1,10 +1,9 @@
 #include "camera.h"
 
-Camera::Camera(int width, int height, glm::vec3 position, Player* player)
+Camera::Camera(int width, int height, Player* player)
 {
 	this->width    = width;
 	this->height   = height;
-	this->position = position;
 	this->player   = player;
 }
 

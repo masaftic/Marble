@@ -34,7 +34,7 @@ public:
 	float sensitivity = 100.0f;
 
 
-	Camera(int width, int height, glm::vec3 position, Player* player);
+	Camera(int width, int height, Player* player);
 
 	void SetMatrix(Shader& shader, const char* uniform);
 	void UpdateMatrix(float FOVdeg, float nearPlane, float farPlane);

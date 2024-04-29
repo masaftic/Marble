@@ -45,7 +45,7 @@ void Game::Init()
 	Shader shader = ResourceManager::LoadShader("resources/shaders/default.vert", "resources/shaders/default.frag", "cube");
 	
 	player = new Player(glm::vec3(0.0f, 1.5f, 0.0f), shader);
-	camera = new Camera(this->width, this->height, glm::vec3(0.0f, 0.0f, 2.0f), player);
+	camera = new Camera(this->width, this->height, player);
 	// sphere = new Sphere(shader);
 
 	// set renderer controls
