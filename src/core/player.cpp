@@ -80,7 +80,7 @@ void Player::Draw(Texture& texture)
     model = glm::rotate(model, this->rotation, glm::cross(glm::normalize(this->velocity), glm::vec3(0.0f, 1.0f, 0.0f)));
 
     this->sphereShader.setMat4("model", model);
-    // this->sphereShader.setVec3("color", glm::vec3(0.8f, 0.2f, 0.4f));
+    this->sphereShader.setVec3("color", glm::vec3(1.0f));
 
 
     glActiveTexture(GL_TEXTURE0);

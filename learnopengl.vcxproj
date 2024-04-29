@@ -137,6 +137,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\core\gameCube.cpp" />
     <ClCompile Include="src\graphics\sphere.cpp" />
     <ClCompile Include="src\core\player.cpp" />
     <ClCompile Include="src\level\gameLevel.cpp" />
