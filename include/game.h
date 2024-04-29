@@ -17,11 +17,11 @@ enum GameState
 class Game
 {
 public:
-	GameState State;
-	bool Keys[1024];
-	unsigned int Width, Height;
+	GameState state;
+	bool keys[1024];
+	unsigned int width, height;
 	// std::vector<GameLevel> Levels;
-	unsigned int LevelNumber = 0;
+	unsigned int levelNumber = 0;
 
 	Game(unsigned int width, unsigned int height);
 	~Game();

@@ -4,7 +4,7 @@ Camera::Camera(int width, int height, glm::vec3 position, Player* player)
 {
 	this->width    = width;
 	this->height   = height;
-	this->Position = position;
+	this->position = position;
 	this->player   = player;
 }
 
@@ -19,7 +19,7 @@ void Camera::UpdateMatrix(float FOVdeg, float nearPlane, float farPlane)
 	glm::mat4 view = glm::mat4(1.0f);
 	glm::mat4 proj = glm::mat4(1.0f);
 
-	view = glm::lookAt(Position, player->Position, Up);
+	view = glm::lookAt(position, player->position, up);
 
 	proj = glm::perspective(glm::radians(FOVdeg), ((float)width / height), nearPlane, farPlane);
 
@@ -107,8 +107,8 @@ void Camera::CalculateCameraPos(float horizontalDistance, float verticalDistance
 
 	float offsetX = horizontalDistance * glm::sin(theta);
 	float offsetZ = horizontalDistance * glm::cos(theta);
-	Position.x = player->Position.x - offsetX;
-	Position.z = player->Position.z - offsetZ;
-	Position.y = player->Position.y + verticalDistance;
+	position.x = player->position.x - offsetX;
+	position.z = player->position.z - offsetZ;
+	position.y = player->position.y + verticalDistance;
 }
 

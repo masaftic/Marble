@@ -74,8 +74,8 @@ Texture ResourceManager::loadTextureFromFile(const char* file, bool alpha)
 
 	Texture texture;
 	if (alpha) {
-		texture.Internal_Format = GL_RGBA;
-		texture.Image_Format    = GL_RGBA;
+		texture.internal_Format = GL_RGBA;
+		texture.image_Format    = GL_RGBA;
 	}
 	texture.Generate(width, height, data);
 

@@ -112,6 +112,9 @@
     <ClInclude Include="include\sphere.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="include\gameCube.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="resources\textures\block.png">

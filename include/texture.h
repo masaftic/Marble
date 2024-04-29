@@ -9,17 +9,17 @@ class Texture
 {
 public:
 	GLuint ID;
-	unsigned int Width, Height;
+	unsigned int width, height;
 
 	// texture format
-	unsigned int Internal_Format;
-	unsigned int Image_Format;
+	unsigned int internal_Format;
+	unsigned int image_Format;
 
 	// texture config
-	unsigned int Wrap_S;
-	unsigned int Wrap_T;
-	unsigned int Filter_Min;
-	unsigned int Filter_Max;
+	unsigned int wrap_S;
+	unsigned int wrap_T;
+	unsigned int filter_Min;
+	unsigned int filter_Max;
 
 	Texture();
 

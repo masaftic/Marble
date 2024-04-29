@@ -15,14 +15,14 @@ class Camera
 {
 public:
 	Player* player;
-	glm::vec3 Position;
+	glm::vec3 position;
 	float pitch = 20;
 	float yaw = -90;
 	float distanceFromPlayer = 10;
 	float angleAroundPlayer = 0;
 
-	glm::vec3 Orientation = glm::vec3(0.0f, 0.0f, -1.0f);
-	glm::vec3 Up = glm::vec3(0.0f, 1.0f, 0.0f);
+	glm::vec3 orientation = glm::vec3(0.0f, 0.0f, -1.0f);
+	glm::vec3 up = glm::vec3(0.0f, 1.0f, 0.0f);
 	glm::mat4 camMatrix = glm::mat4(1.0f);
 
 	bool firstClick = true;

@@ -16,7 +16,7 @@ Camera* camera;
 Player* player;
 Sphere* sphere;
 
-Game::Game(unsigned int width, unsigned int height) : Height(height), Width(width), State(GAME_ACTIVE), Keys()
+Game::Game(unsigned int width, unsigned int height) : height(height), width(width), state(GAME_ACTIVE), keys()
 {
 	
 }
@@ -31,8 +31,8 @@ Game::~Game()
 
 void Game::UpdateResolution(int width, int height)
 {
-	this->Width = Width;
-	this->Height = Height;
+	this->width = width;
+	this->height = height;
 	camera->width = width;
 	camera->height = height;
 }
@@ -44,7 +44,7 @@ void Game::Init()
 	Shader shader = ResourceManager::LoadShader("resources/shaders/default.vert", "resources/shaders/default.frag", "cube");
 	
 	player = new Player(glm::vec3(0.0f, 1.5f, 0.0f), shader);
-	camera = new Camera(this->Width, this->Height, glm::vec3(0.0f, 0.0f, 2.0f), player);
+	camera = new Camera(this->width, this->height, glm::vec3(0.0f, 0.0f, 2.0f), player);
 	// sphere = new Sphere(shader);
 
 	// set renderer controls
@@ -61,28 +61,28 @@ void Game::Init()
 
 void Game::ProcessInput(GLFWwindow* window, float dt)
 {
-	if (this->State == GAME_ACTIVE)
+	if (this->state == GAME_ACTIVE)
 	{	
-		glm::vec3 cameraDirection = glm::vec3(player->Position.x, 0.0f, player->Position.z) - glm::vec3(camera->Position.x, 0.0f, camera->Position.z);
+		glm::vec3 cameraDirection = glm::vec3(player->position.x, 0.0f, player->position.z) - glm::vec3(camera->position.x, 0.0f, camera->position.z);
 
 		if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
 		{
-			player->Direction = glm::normalize(cameraDirection);
+			player->direction = glm::normalize(cameraDirection);
 			player->MoveForward();
 		}
 		if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
 		{
-			player->Direction = glm::normalize(cameraDirection);
+			player->direction = glm::normalize(cameraDirection);
 			player->MoveBackward();
 		}
 		if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
 		{
-			player->Direction = glm::normalize(cameraDirection);
+			player->direction = glm::normalize(cameraDirection);
 			player->StrafeRight();
 		}
 		if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
 		{
-			player->Direction = glm::normalize(cameraDirection);
+			player->direction = glm::normalize(cameraDirection);
 			player->StrafeLeft();
 		}
 		camera->Inputs(window, dt);
@@ -94,7 +94,7 @@ void Game::Update(float dt)
 {
 	player->Update(dt);
 	
-	auto v = player->Velocity;
+	auto v = player->velocity;
 	std::cout << std::setprecision(2) << std::fixed;
 	std::cout << v.x << " " << v.y << " " << v.z << '\n';
 }

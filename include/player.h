@@ -6,18 +6,18 @@
 
 class Player {
 public:
-    glm::vec3 Position;
-    glm::vec3 Direction;
-    glm::vec3 Velocity;
+    glm::vec3 position;
+    glm::vec3 direction;
+    glm::vec3 velocity;
     
-    float Rotation;
-    float Speed;
-    float MaxSpeed;
-    float Acceleration;
-    float Friction;
-    float JumpStrength;
+    float rotation;
+    float speed;
+    float maxSpeed;
+    float acceleration;
+    float friction;
+    float jumpStrength;
 
-    bool IsGrounded;
+    bool isGrounded;
 
 
     Player(glm::vec3 position, Shader sphereShader);
