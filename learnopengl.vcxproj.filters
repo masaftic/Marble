@@ -126,6 +126,15 @@
     <Image Include="resources\textures\black_circle.png">
       <Filter>Resource Files</Filter>
     </Image>
+    <Image Include="resources\textures\earth.jpg">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="resources\textures\earth2.jpg">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="resources\textures\minato.jpg">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
     <Text Include="resources\levels\level1.txt" />

@@ -175,6 +175,9 @@
     <Image Include="resources\textures\black_circle.png" />
     <Image Include="resources\textures\block.png" />
     <Image Include="resources\textures\block_solid.png" />
+    <Image Include="resources\textures\earth.jpg" />
+    <Image Include="resources\textures\earth2.jpg" />
+    <Image Include="resources\textures\minato.jpg" />
     <Image Include="resources\textures\spiral.png" />
   </ItemGroup>
   <ItemGroup>

@@ -1,7 +1,7 @@
 #include "sphere.h"
 #include "glm/glm.hpp"
 
-Sphere::Sphere(Shader& shader) : radius(1.0f), sectorCount(50), stackCount(40)
+Sphere::Sphere(Shader& shader) : radius(1.0f), sectorCount(1000), stackCount(50)
 {
 	this->radius = radius;
 	this->sectorCount = sectorCount;
@@ -46,7 +46,7 @@ void Sphere::Init()
 	}
 
 	// Calculate texture coordinates for each vertex
-	for (size_t i = 0; i < this->vertices.size() / 3 - 2; i++) {
+	for (size_t i = 0; i < this->vertices.size() - 2; i += 3) {
 		glm::vec3 vertex = glm::vec3(vertices[i], vertices[i + 1], vertices[i + 2]);
 
 		// Calculate spherical coordinates
@@ -61,6 +61,8 @@ void Sphere::Init()
 		this->texCoords.push_back(u);
 		this->texCoords.push_back(v);
 	}
+
+	int w = 1;
 }
 
 
@@ -74,15 +76,17 @@ void Sphere::InitRender()
 
 	EBO ebo(this->indices.data(), (unsigned int)this->indices.size() * sizeof(int));
 
-	int stride = 32 * sizeof(char);
+	// int stride = 32 * sizeof(char);
 	this->vao.LinkAtrrib(vbo, this->attribVert, 3, GL_FLOAT, 3 * sizeof(float), (void*)0);
-	this->vao.LinkAtrrib(vbotex, this->attribNorm, 3, GL_FLOAT, 2 * sizeof(float), (void*)(0));
-	//this->vao.LinkAtrrib(vbo, this->attribTex, 2, GL_FLOAT, 8 * sizeof(float), (void*)(sizeof(float) * 6));
+	this->vao.LinkAtrrib(vbotex, this->attribTex, 2, GL_FLOAT, 2 * sizeof(float), (void*)0);
+	// this->vao.LinkAtrrib(vbotex, this->attribNorm, 3, GL_FLOAT, 2 * sizeof(float), (void*)(0));
 
+	vbotex.Unbind();
 	vbo.Unbind();
 	this->vao.Unbind();
 	ebo.Unbind();
 }
+
 
 
 void Sphere::Draw()

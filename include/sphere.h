@@ -29,8 +29,8 @@ public:
 
 	// layout locations for the shaders
 	int attribVert = 0;
-	int attribNorm = 1;
-	int attribTex = 2;
+	int attribTex = 1;
+	int attribNorm = 2;
 
 
 	void Init();
