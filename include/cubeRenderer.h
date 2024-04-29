@@ -5,10 +5,6 @@
 #include "VAO.h"
 
 
-// it's effectively not much more than a 2D image used together with some data to position it in a larger world
-// (e.g. position, rotation, and size). 
-// Basically, sprites are the render-able image/texture objects we use in a 2D game.
-
 class CubeRenderer
 {
 public:

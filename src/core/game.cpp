@@ -8,6 +8,7 @@
 #include <GLFW/glfw3.h>
 #include <iomanip>
 #include <sphere.h>
+#include <gameCube.h>
 
 
 CubeRenderer* Renderer;
@@ -53,7 +54,6 @@ void Game::Init()
 	//// load textures
 	ResourceManager::LoadTexture("resources/textures/rock.png", true, "rock");
 	ResourceManager::LoadTexture("resources/textures/block_solid.png", false, "block_solid");
-	
 	
 	//// load levels
 	
@@ -112,13 +112,17 @@ void Game::Render()
 	Texture block_solid = ResourceManager::GetTexture("block_solid");
 	Texture rock = ResourceManager::GetTexture("rock");
 
-	Renderer->DrawCube(block_solid, glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(5.0f, 1.0f, 5.0f));
-	Renderer->DrawCube(block_solid, glm::vec3(5.0f, 0.0f, 0.0f), glm::vec3(5.0f, 1.0f, 5.0f));
-	Renderer->DrawCube(block_solid, glm::vec3(0.0f, 0.0f, 5.0f), glm::vec3(5.0f, 1.0f, 5.0f));
-	Renderer->DrawCube(block_solid, glm::vec3(5.0f, 0.0f, 5.0f), glm::vec3(5.0f, 1.0f, 5.0f));
+	GameCube cube1(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(5.0f, 1.0f, 5.0f));
+	GameCube cube2(glm::vec3(0.0f, 0.0f, 5.0f), glm::vec3(5.0f, 1.0f, 5.0f));
+	GameCube cube3(glm::vec3(5.0f, 0.0f, 0.0f), glm::vec3(5.0f, 1.0f, 5.0f));
+	GameCube cube4(glm::vec3(5.0f, 0.0f, 5.0f), glm::vec3(5.0f, 1.0f, 5.0f));
+	cube4.color = glm::vec3(1.0f, 0.5f, 0.2f);
+
+	cube1.Draw(Renderer, block_solid);
+	cube2.Draw(Renderer, block_solid);
+	cube3.Draw(Renderer, block_solid);
+	cube4.Draw(Renderer, block_solid);
 
 	player->Draw(rock);
-	// Renderer->DrawCube(texture2, player->Position, glm::vec3(10.0f, 10.0f, 10.0f), glm::cross(player->Direction, glm::vec3(0.0f, 1.0f, 0.0f)), player->Rotation, glm::vec3(0.7f, 0.6f, 0.7f));
-	
 }
 
