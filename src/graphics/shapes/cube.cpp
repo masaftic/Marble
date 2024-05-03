@@ -1,40 +1,13 @@
-#include "cubeRenderer.h"
-#include <VBO.h>
+#include "cube.h"
 
-CubeRenderer::CubeRenderer(Shader& shader) : cubeVAO()
+Cube::Cube(glm::vec3 position, glm::vec3 size)
 {
-    this->shader = shader;
-    this->initRenderData();
+	this->position = position;
+	this->size = size;
+    this->initRender();
 }
 
-CubeRenderer::~CubeRenderer()
-{
-    this->cubeVAO.Delete();
-}
-
-void CubeRenderer::DrawCube(Texture& texture, glm::vec3 position, glm::vec3 size, glm::vec3 rotationAxis, float rotate, glm::vec3 color)
-{
-    this->shader.Use();
-
-    glm::mat4 model = glm::mat4(1.0f);
-    model = glm::translate(model, position);
-    model = glm::rotate(model, rotate, rotationAxis);
-    model = glm::scale(model, size);
-
-    this->shader.setMat4("model", model);
-    this->shader.setVec3("color", color);
-
-
-    glActiveTexture(GL_TEXTURE0);
-    texture.Bind();
-    
-    this->cubeVAO.Bind();
-    glDrawArrays(GL_TRIANGLES, 0, 36);
-}
-
-
-
-void CubeRenderer::initRenderData()
+void Cube::initRender()
 {
     float vertices[] = {
         -0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
@@ -80,13 +53,36 @@ void CubeRenderer::initRenderData()
         -0.5f,  0.5f, -0.5f,  0.0f, 1.0f
     };
 
-	VBO vbo(vertices, sizeof(vertices));
+    VBO vbo(vertices, sizeof(vertices));
 
-    this->cubeVAO.Bind();
+    this->vao.Bind();
 
-    this->cubeVAO.LinkAtrrib(vbo, 0, 3, GL_FLOAT, 5 * sizeof(float), (void*)0);
-    this->cubeVAO.LinkAtrrib(vbo, 1, 2, GL_FLOAT, 5 * sizeof(float), (void*)(3 * sizeof(float)));
+    this->vao.LinkAtrrib(vbo, 0, 3, GL_FLOAT, 5 * sizeof(float), (void*)0);
+    this->vao.LinkAtrrib(vbo, 1, 2, GL_FLOAT, 5 * sizeof(float), (void*)(3 * sizeof(float)));
 
     vbo.Unbind();
-    this->cubeVAO.Unbind();
+    this->vao.Unbind();
 }
+
+
+void Cube::Draw(Shader& shader, Texture& texture)
+{
+    shader.Use();
+
+    glm::mat4 model = glm::mat4(1.0f);
+    model = glm::translate(model, position);
+    model = glm::rotate(model, rotate, rotationAxis);
+    model = glm::scale(model, size);
+
+    shader.setMat4("model", model);
+    shader.setVec3("color", color);
+
+
+    glActiveTexture(GL_TEXTURE0);
+    texture.Bind();
+
+    this->vao.Bind();
+    glDrawArrays(GL_TRIANGLES, 0, 36);
+}
+
+

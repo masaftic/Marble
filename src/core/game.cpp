@@ -2,20 +2,18 @@
 #include <camera.h>
 #include <texture.h>
 #include <VAO.h>
-#include <cubeRenderer.h>
 #include <resourceManager.h>
 #include <gameLevel.h>
 #include <GLFW/glfw3.h>
 #include <iomanip>
 #include <sphere.h>
-#include <gameCube.h>
+#include <cube.h>
 
 
-CubeRenderer* cubeRenderer;
 
 Camera* camera;
 Player* player;
-Sphere* sphere;
+
 
 Game::Game(unsigned int width, unsigned int height) : height(height), width(width), state(GAME_ACTIVE), keys()
 {
@@ -24,8 +22,6 @@ Game::Game(unsigned int width, unsigned int height) : height(height), width(widt
 
 Game::~Game()
 {
-	delete cubeRenderer;
-	delete sphere;
 	delete player;
 	delete camera;
 }
@@ -42,17 +38,14 @@ void Game::UpdateResolution(int width, int height)
 void Game::Init()
 {
 	// load shaders
-	Shader shader = ResourceManager::LoadShader("resources/shaders/default.vert", "resources/shaders/default.frag", "cube");
+	Shader shader = ResourceManager::LoadShader("resources/shaders/default.vert", "resources/shaders/default.frag", "default");
 	
-	player = new Player(glm::vec3(0.0f, 1.5f, 0.0f), shader);
+	player = new Player(glm::vec3(0.0f, 1.5f, 0.0f));
 	camera = new Camera(this->width, this->height, player);
-	// sphere = new Sphere(shader);
 
-	// set renderer controls
-	cubeRenderer = new CubeRenderer(shader);
 
 	//// load textures
-	ResourceManager::LoadTexture("resources/textures/earthc.png", true, "rock");
+	ResourceManager::LoadTexture("resources/textures/rock.png", true, "rock");
 	ResourceManager::LoadTexture("resources/textures/block_solid.png", false, "block_solid");
 	
 	//// load levels
@@ -94,35 +87,34 @@ void Game::Update(float dt)
 {
 	player->Update(dt);
 	
-	auto v = player->velocity;
-	std::cout << std::setprecision(2) << std::fixed;
-	std::cout << v.x << " " << v.y << " " << v.z << '\n';
+	//auto v = player->velocity;
+	//std::cout << std::setprecision(2) << std::fixed;
+	//std::cout << v.x << " " << v.y << " " << v.z << '\n';
 }
 
 
 void Game::Render()
 {
-	Shader cubeShader = ResourceManager::GetShader("cube");
+	Shader shader = ResourceManager::GetShader("default");
 
-	cubeShader.Use();
+	shader.Use();
 	camera->UpdateMatrix(45.0f, 0.1f, 100.0f);
-	camera->SetMatrix(cubeShader, "camMatrix");
-
+	camera->SetMatrix(shader, "camMatrix");
 
 	Texture block_solid = ResourceManager::GetTexture("block_solid");
 	Texture rock = ResourceManager::GetTexture("rock");
 
-	GameCube cube1(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(5.0f, 1.0f, 5.0f));
-	GameCube cube2(glm::vec3(0.0f, 0.0f, 5.0f), glm::vec3(5.0f, 1.0f, 5.0f));
-	GameCube cube3(glm::vec3(5.0f, 0.0f, 0.0f), glm::vec3(5.0f, 1.0f, 5.0f));
-	GameCube cube4(glm::vec3(5.0f, 0.0f, 5.0f), glm::vec3(5.0f, 1.0f, 5.0f));
+	Cube cube1(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(5.0f, 1.0f, 5.0f));
+	Cube cube2(glm::vec3(0.0f, 0.0f, 5.0f), glm::vec3(5.0f, 1.0f, 5.0f));
+	Cube cube3(glm::vec3(5.0f, 0.0f, 0.0f), glm::vec3(5.0f, 1.0f, 5.0f));
+	Cube cube4(glm::vec3(5.0f, 0.0f, 5.0f), glm::vec3(5.0f, 1.0f, 5.0f));
 	cube4.color = glm::vec3(1.0f, 0.5f, 0.2f);
 
-	cube1.Draw(cubeRenderer, block_solid);
-	cube2.Draw(cubeRenderer, block_solid);
-	cube3.Draw(cubeRenderer, block_solid);
-	cube4.Draw(cubeRenderer, block_solid);
+	cube1.Draw(shader, block_solid);
+	cube2.Draw(shader, block_solid);
+	cube3.Draw(shader, block_solid);
+	cube4.Draw(shader, block_solid);
 
-	player->Draw(rock);
+	player->Draw(shader, rock);
 }
 

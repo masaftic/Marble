@@ -6,7 +6,7 @@
 #include <glad/glad.h>
 
 #include "texture.h"
-#include "shaderClass.h"
+#include "shader.h"
 
 
 class ResourceManager

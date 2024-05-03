@@ -137,22 +137,21 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="src\core\gameCube.cpp" />
-    <ClCompile Include="src\graphics\sphere.cpp" />
+    <ClCompile Include="src\graphics\shapes\cube.cpp" />
+    <ClCompile Include="src\graphics\shapes\sphere.cpp" />
     <ClCompile Include="src\core\player.cpp" />
     <ClCompile Include="src\level\gameLevel.cpp" />
     <ClCompile Include="src\resource\resourceManager.cpp" />
-    <ClCompile Include="src\graphics\cubeRenderer.cpp" />
     <ClCompile Include="src\core\game.cpp" />
     <ClCompile Include="src\graphics\camera.cpp" />
-    <ClCompile Include="src\graphics\EBO.cpp" />
+    <ClCompile Include="src\graphics\data\EBO.cpp" />
     <ClCompile Include="src\libs\glad.c" />
     <ClCompile Include="src\main.cpp" />
-    <ClCompile Include="src\graphics\shaderClass.cpp" />
+    <ClCompile Include="src\graphics\shader.cpp" />
     <ClCompile Include="src\libs\stb.cpp" />
     <ClCompile Include="src\graphics\texture.cpp" />
-    <ClCompile Include="src\graphics\VAO.cpp" />
-    <ClCompile Include="src\graphics\VBO.cpp" />
+    <ClCompile Include="src\graphics\data\VAO.cpp" />
+    <ClCompile Include="src\graphics\data\VBO.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="resources\shaders\default.frag" />
@@ -162,12 +161,11 @@
     <ClInclude Include="include\camera.h" />
     <ClInclude Include="include\EBO.h" />
     <ClInclude Include="include\game.h" />
-    <ClInclude Include="include\gameCube.h" />
+    <ClInclude Include="include\cube.h" />
     <ClInclude Include="include\gameLevel.h" />
     <ClInclude Include="include\player.h" />
     <ClInclude Include="include\resourceManager.h" />
-    <ClInclude Include="include\shaderClass.h" />
-    <ClInclude Include="include\cubeRenderer.h" />
+    <ClInclude Include="include\shader.h" />
     <ClInclude Include="include\sphere.h" />
     <ClInclude Include="include\texture.h" />
     <ClInclude Include="include\VAO.h" />
