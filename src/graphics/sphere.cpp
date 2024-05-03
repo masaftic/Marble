@@ -28,6 +28,19 @@ void Sphere::Init()
 			this->vertices.push_back(xPos);
 			this->vertices.push_back(yPos);
 			this->vertices.push_back(zPos);
+
+
+			this->texCoords.push_back(xSegment);
+			this->texCoords.push_back(ySegment);
+
+			// Calculate the vertex normal
+			float nx = xPos / this->radius;
+			float ny = yPos / this->radius;
+			float nz = zPos / this->radius;
+
+			this->normals.push_back(nx);
+			this->normals.push_back(ny);
+			this->normals.push_back(nz);
 		}
 	}
 
@@ -44,25 +57,6 @@ void Sphere::Init()
 			this->indices.push_back((y + 1) * (this->sectorCount + 1) + x + 1);
 		}
 	}
-
-	// Calculate texture coordinates for each vertex
-	for (size_t i = 0; i < this->vertices.size() - 2; i += 3) {
-		glm::vec3 vertex = glm::vec3(vertices[i], vertices[i + 1], vertices[i + 2]);
-
-		// Calculate spherical coordinates
-		float theta = atan2(vertex.z, vertex.x);  // Longitude
-		float phi = acos(vertex.y / radius);       // Latitude
-
-		// Map spherical coordinates to texture coordinates
-		float u = (theta + PI) / (2 * PI);
-		float v = phi / PI;
-
-		// Store texture coordinates
-		this->texCoords.push_back(u);
-		this->texCoords.push_back(v);
-	}
-
-	int w = 1;
 }
 
 

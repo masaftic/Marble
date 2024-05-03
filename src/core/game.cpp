@@ -52,7 +52,7 @@ void Game::Init()
 	cubeRenderer = new CubeRenderer(shader);
 
 	//// load textures
-	ResourceManager::LoadTexture("resources/textures/rock.png", true, "rock");
+	ResourceManager::LoadTexture("resources/textures/earthc.png", true, "rock");
 	ResourceManager::LoadTexture("resources/textures/block_solid.png", false, "block_solid");
 	
 	//// load levels
