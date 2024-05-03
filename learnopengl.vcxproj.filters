@@ -27,18 +27,6 @@
     <ClCompile Include="src\main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\graphics\shaderClass.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\graphics\VBO.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\graphics\EBO.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\graphics\VAO.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\libs\stb.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -51,9 +39,6 @@
     <ClCompile Include="src\core\game.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\graphics\cubeRenderer.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\resource\resourceManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -63,10 +48,22 @@
     <ClCompile Include="src\core\player.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\graphics\sphere.cpp">
+    <ClCompile Include="src\graphics\shapes\cube.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\core\gameCube.cpp">
+    <ClCompile Include="src\graphics\shapes\sphere.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\graphics\data\EBO.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\graphics\shader.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\graphics\data\VAO.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\graphics\data\VBO.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -79,9 +76,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="include\shaderClass.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="include\VBO.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -100,9 +94,6 @@
     <ClInclude Include="include\game.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\cubeRenderer.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="include\resourceManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -115,7 +106,10 @@
     <ClInclude Include="include\sphere.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\gameCube.h">
+    <ClInclude Include="include\cube.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\shader.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -126,12 +120,6 @@
     <Image Include="resources\textures\block_solid.png">
       <Filter>Resource Files</Filter>
     </Image>
-    <Image Include="resources\textures\spiral.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="resources\textures\black_circle.png">
-      <Filter>Resource Files</Filter>
-    </Image>
     <Image Include="resources\textures\earth.jpg">
       <Filter>Resource Files</Filter>
     </Image>
@@ -139,6 +127,12 @@
       <Filter>Resource Files</Filter>
     </Image>
     <Image Include="resources\textures\minato.jpg">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="resources\textures\earthp.jpg">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="resources\textures\rock.png">
       <Filter>Resource Files</Filter>
     </Image>
   </ItemGroup>
