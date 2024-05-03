@@ -4,11 +4,11 @@
 #include<glm/glm.hpp>
 #include <VAO.h>
 #include <EBO.h>
-#include <shaderClass.h>
+#include <shader.h>
+#include "texture.h"
 
 
-
-const float PI = 3.1415926;
+const float PI = 3.1415926f;
 
 class Sphere
 {
@@ -20,11 +20,10 @@ public:
 	std::vector<unsigned int> indices;
 	std::vector<unsigned int> lineIndices;
 
-	int sectorCount;
-	int stackCount;
+	unsigned int sectorCount;
+	unsigned int stackCount;
 	float radius;
 
-	Shader shader;
 	VAO vao;
 
 	// layout locations for the shaders
@@ -35,7 +34,7 @@ public:
 
 	void Init();
 	void InitRender();
-	void Draw();
+	void Draw(Shader& shader, Texture& texture);
 
-	Sphere(Shader& shader);
+	Sphere();
 };

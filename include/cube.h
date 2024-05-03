@@ -1,9 +1,11 @@
 #pragma once
 
 #include <glm/glm.hpp>
-#include <cubeRenderer.h>
+#include "VAO.h"
+#include "shader.h"
+#include "texture.h"
 
-class GameCube
+class Cube
 {
 public:
 	glm::vec3 position;
@@ -12,8 +14,11 @@ public:
 	float rotate = 0.0f;
 	glm::vec3 color = glm::vec3(1.0f);
 
-	GameCube(glm::vec3 position, glm::vec3 size);
+	Cube(glm::vec3 position, glm::vec3 size);
 
-	void Draw(CubeRenderer* renderer, Texture texture);
+	VAO vao;
+
+	void initRender();
+	void Draw(Shader& shader, Texture& texture);
 };
 

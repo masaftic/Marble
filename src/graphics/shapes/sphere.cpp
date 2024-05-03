@@ -1,13 +1,12 @@
 #include "sphere.h"
 #include "glm/glm.hpp"
+#include <texture.h>
 
-Sphere::Sphere(Shader& shader) : radius(1.0f), sectorCount(1000), stackCount(50)
+Sphere::Sphere() : radius(1.0f), sectorCount(1000), stackCount(50)
 {
 	this->radius = radius;
 	this->sectorCount = sectorCount;
 	this->stackCount = stackCount;
-	this->shader = shader;
-	this->shader.Use();
 	this->Init();
 	this->InitRender();
 }
@@ -44,9 +43,9 @@ void Sphere::Init()
 		}
 	}
 
-	for (int y = 0; y < this->stackCount; ++y)
+	for (unsigned int y = 0; y <= this->stackCount; ++y)
 	{
-		for (int x = 0; x < this->sectorCount; ++x)
+		for (unsigned int x = 0; x <= this->sectorCount; ++x)
 		{
 			this->indices.push_back((y + 1) * (this->sectorCount + 1) + x);
 			this->indices.push_back(y * (this->sectorCount + 1) + x);
@@ -63,14 +62,12 @@ void Sphere::Init()
 
 void Sphere::InitRender()
 {
-	// auto vert = this->vertices;
 	this->vao.Bind();
 	VBO vbo(this->vertices.data(), (unsigned int)this->vertices.size() * sizeof(float));
 	VBO vbotex(this->texCoords.data(), (unsigned int)this->texCoords.size() * sizeof(float));
 
 	EBO ebo(this->indices.data(), (unsigned int)this->indices.size() * sizeof(int));
 
-	// int stride = 32 * sizeof(char);
 	this->vao.LinkAtrrib(vbo, this->attribVert, 3, GL_FLOAT, 3 * sizeof(float), (void*)0);
 	this->vao.LinkAtrrib(vbotex, this->attribTex, 2, GL_FLOAT, 2 * sizeof(float), (void*)0);
 	// this->vao.LinkAtrrib(vbotex, this->attribNorm, 3, GL_FLOAT, 2 * sizeof(float), (void*)(0));
@@ -83,9 +80,12 @@ void Sphere::InitRender()
 
 
 
-void Sphere::Draw()
+void Sphere::Draw(Shader& shader, Texture& texture)
 {
 	shader.Use();
+
+	glActiveTexture(GL_TEXTURE0);
+	texture.Bind();
 
 	this->vao.Bind();
 	glDrawElements(GL_TRIANGLES, (unsigned int)this->indices.size(), GL_UNSIGNED_INT, 0);

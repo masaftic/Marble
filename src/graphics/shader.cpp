@@ -1,4 +1,4 @@
-#include"shaderClass.h"
+#include"shader.h"
 
 // Reads a text file and outputs a string with everything in the text file
 

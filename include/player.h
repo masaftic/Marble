@@ -20,7 +20,7 @@ public:
     bool isGrounded;
 
 
-    Player(glm::vec3 position, Shader sphereShader);
+    Player(glm::vec3 position);
 
     float GetSpeed();
 
@@ -33,9 +33,8 @@ public:
 
     void Update(float deltaTime);
 
-    void Draw(Texture& texture);
+    void Draw(Shader& shader, Texture& texture);
 
 private:
-    Shader sphereShader;
     Sphere* sphere;
 };

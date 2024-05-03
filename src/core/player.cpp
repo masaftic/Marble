@@ -2,13 +2,12 @@
 #include <glm/glm.hpp>
 
 
-Player::Player(glm::vec3 position, Shader sphereShader) : speed(0.0f), maxSpeed(10.0f), acceleration(0.015f), friction(0.999f), jumpStrength(10.0f), isGrounded(false), rotation(0.0f)
+Player::Player(glm::vec3 position) : speed(0.0f), maxSpeed(10.0f), acceleration(0.015f), friction(0.999f), jumpStrength(10.0f), isGrounded(false), rotation(0.0f)
 {
     this->position = position;
     this->direction = glm::vec3(1.0f, 0, 1.0f);
     this->velocity = glm::vec3(1.0f, 0.0f, 1.0f);
-    this->sphereShader = sphereShader;
-    sphere = new Sphere(sphereShader);
+    sphere = new Sphere();
 }
 
 float Player::GetSpeed()
@@ -71,21 +70,16 @@ void Player::Update(float deltaTime)
     //}
 }
 
-void Player::Draw(Texture& texture)
+void Player::Draw(Shader& shader, Texture& texture)
 {
-    this->sphereShader.Use();
-
     glm::mat4 model = glm::mat4(1.0f);
     model = glm::translate(model, this->position);
     model = glm::rotate(model, this->rotation, glm::cross(glm::normalize(this->velocity), glm::vec3(0.0f, 1.0f, 0.0f)));
 
-    this->sphereShader.setMat4("model", model);
-    this->sphereShader.setVec3("color", glm::vec3(1.0f));
+    shader.Use();
+    shader.setMat4("model", model);
+    shader.setVec3("color", glm::vec3(1.0f));
 
 
-    glActiveTexture(GL_TEXTURE0);
-    texture.Bind();
-
-
-    sphere->Draw();
+    sphere->Draw(shader, texture);
 }
