@@ -93,6 +93,10 @@ void Game::ProcessInput(GLFWwindow* window, float dt)
 			player->direction = glm::normalize(cameraDirection);
 			player->StrafeLeft(dt);
 		}
+		if (glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS)
+		{
+			player->Jump();
+		}
 		if (glfwGetKey(window, GLFW_KEY_R) == GLFW_PRESS)
 		{
 			Reset();

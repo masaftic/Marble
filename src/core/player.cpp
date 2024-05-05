@@ -2,7 +2,7 @@
 #include <glm/glm.hpp>
 
 
-Player::Player(glm::vec3 position) : speed(0.0f), maxSpeed(10.0f), acceleration(15.015f), friction(0.01f), jumpStrength(10.0f), isGrounded(false), rotation(0.0f)
+Player::Player(glm::vec3 position) : speed(0.0f), maxSpeed(10.0f), acceleration(15.015f), friction(0.01f), jumpStrength(7.0f), isGrounded(false), rotation(0.0f)
 {
     this->position = position;
     this->lastPosition = this->position;
@@ -88,7 +88,7 @@ void Player::Update(float deltaTime, std::vector<Cube>& cubes)
 
     // Apply gravity if not grounded
     if (!isGrounded) {
-        velocity.y -= 4.81f * deltaTime; // Apply gravity
+        velocity.y -= 9.81f * deltaTime; // Apply gravity
     }
 
     // Update position based on velocity
