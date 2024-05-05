@@ -2,7 +2,7 @@
 #include "glm/glm.hpp"
 #include <texture.h>
 
-Sphere::Sphere() : radius(1.0f), sectorCount(1000), stackCount(50)
+Sphere::Sphere() : radius(1.0f), sectorCount(200), stackCount(200)
 {
 	this->radius = radius;
 	this->sectorCount = sectorCount;

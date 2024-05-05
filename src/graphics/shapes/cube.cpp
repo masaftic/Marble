@@ -4,18 +4,21 @@ Cube::Cube(glm::vec3 position, glm::vec3 size)
 {
 	this->position = position;
 	this->size = size;
-    this->initRender();
 }
 
 Cube::Cube(const Cube& other)
 {
     this->position = other.position;
     this->size = other.size;
-    this->initRender();
 }
+
+VAO* Cube::vao = nullptr;
+
 
 void Cube::initRender()
 {
+    Cube::vao = new VAO();
+
     float vertices[] = {
         -0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
          0.5f, -0.5f, -0.5f,  1.0f, 0.0f,
@@ -62,33 +65,33 @@ void Cube::initRender()
 
     VBO vbo(vertices, sizeof(vertices));
 
-    this->vao.Bind();
+    vao->Bind();
 
-    this->vao.LinkAtrrib(vbo, 0, 3, GL_FLOAT, 5 * sizeof(float), (void*)0);
-    this->vao.LinkAtrrib(vbo, 1, 2, GL_FLOAT, 5 * sizeof(float), (void*)(3 * sizeof(float)));
+    vao->LinkAtrrib(vbo, 0, 3, GL_FLOAT, 5 * sizeof(float), (void*)0);
+    vao->LinkAtrrib(vbo, 1, 2, GL_FLOAT, 5 * sizeof(float), (void*)(3 * sizeof(float)));
 
     vbo.Unbind();
-    this->vao.Unbind();
+    vao->Unbind();
 }
 
 
-void Cube::Draw(Shader& shader, Texture& texture)
+void Cube::Draw(Cube& cube, Shader& shader, Texture& texture)
 {
     shader.Use();
 
     glm::mat4 model = glm::mat4(1.0f);
-    model = glm::translate(model, position);
-    model = glm::rotate(model, rotate, rotationAxis);
-    model = glm::scale(model, size);
+    model = glm::translate(model, cube.position);
+    model = glm::rotate(model, cube.rotate, cube.rotationAxis);
+    model = glm::scale(model, cube.size);
 
     shader.setMat4("model", model);
-    shader.setVec3("color", color);
+    shader.setVec3("color", cube.color);
 
 
     glActiveTexture(GL_TEXTURE0);
     texture.Bind();
 
-    this->vao.Bind();
+    vao->Bind();
     glDrawArrays(GL_TRIANGLES, 0, 36);
 }
 
