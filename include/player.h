@@ -8,12 +8,12 @@
 class Player {
 public:
     glm::vec3 position;
-    glm::vec3 lastPosition;
     glm::vec3 direction;
     glm::vec3 velocity;
+    glm::vec3 rotationVec;
     
     float radius;
-    float rotation;
+    float rotationAngle;
     float speed;
     float maxSpeed;
     float acceleration;
@@ -36,15 +36,12 @@ public:
 
     void Update(float deltaTime, std::vector<Cube>& cubes);
 
-    void UpdateBallRotation(glm::mat4& modelMatrix, float radius);
 
-    // void Update(float deltaTime);
 
-    bool IsGrounded();
 
     void Draw(Shader& shader, Texture& texture);
 
-    std::pair<bool, glm::vec3> CheckCollision(Cube cube);
+    std::pair<bool, glm::vec3> CheckCollision(Cube& cube);
 
     void ResolveCollision(glm::vec3 closestPoint);
 

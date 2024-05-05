@@ -43,6 +43,9 @@ void Game::Init()
 	player = new Player(glm::vec3(0.0f, 1.5f, 0.0f));
 	camera = new Camera(this->width, this->height, player);
 
+
+	Cube::initRender();
+
 	Cube cube1(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(5.0f, 1.0f, 5.0f));
 	Cube cube2(glm::vec3(0.0f, 0.0f, 5.0f), glm::vec3(5.0f, 1.0f, 5.0f));
 	Cube cube3(glm::vec3(5.0f, 0.0f, 0.0f), glm::vec3(5.0f, 1.0f, 5.0f));
@@ -53,6 +56,11 @@ void Game::Init()
 	cubes.push_back(cube3);
 	cubes.push_back(cube4);
 	cubes.push_back(cube5);
+
+	for (int i = 0; i < 1; i++) {
+		Cube cube35(glm::vec3(5.0f, 2.0f, 5.0f), glm::vec3(5.0f, 1.0f, 5.0f));
+		cubes.push_back(cube35);
+	}
 
 	//// load textures
 	ResourceManager::LoadTexture("resources/textures/rock.png", true, "rock");
@@ -117,7 +125,7 @@ void Game::Update(float dt)
 
 	auto v = player->velocity;
 	std::cout << std::setprecision(2) << std::fixed;
-	std::cout << v.x << " " << v.y << " " << v.z << '\n';
+	// std::cout << v.x << " " << v.y << " " << v.z << '\n';
 }
 
 
@@ -134,7 +142,7 @@ void Game::Render()
 
 
 	for (int i = 0; i < cubes.size(); i++) {
-		cubes[i].Draw(shader, block_solid);
+		Cube::Draw(cubes[i], shader, block_solid);
 	}
 
 	player->Draw(shader, rock);

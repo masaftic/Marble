@@ -17,9 +17,9 @@ public:
 	Cube(glm::vec3 position, glm::vec3 size);
 	Cube(const Cube& other);
 
-	VAO vao;
+	static VAO* vao;
 
-	void initRender();
-	void Draw(Shader& shader, Texture& texture);
+	static void initRender();
+	static void Draw(Cube& cube, Shader& shader, Texture& texture);
 };
 
