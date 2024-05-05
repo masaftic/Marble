@@ -74,6 +74,8 @@
     <None Include="resources\shaders\default.frag">
       <Filter>Resource Files\shaders</Filter>
     </None>
+    <None Include="resources\shaders\skybox.vert" />
+    <None Include="resources\shaders\skybox.frag" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\VBO.h">
@@ -133,6 +135,24 @@
       <Filter>Resource Files</Filter>
     </Image>
     <Image Include="resources\textures\rock.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="resources\textures\skybox\back.jpg">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="resources\textures\skybox\bottom.jpg">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="resources\textures\skybox\front.jpg">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="resources\textures\skybox\left.jpg">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="resources\textures\skybox\right.jpg">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="resources\textures\skybox\top.jpg">
       <Filter>Resource Files</Filter>
     </Image>
   </ItemGroup>

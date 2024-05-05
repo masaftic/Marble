@@ -156,6 +156,8 @@
   <ItemGroup>
     <None Include="resources\shaders\default.frag" />
     <None Include="resources\shaders\default.vert" />
+    <None Include="resources\shaders\skybox.frag" />
+    <None Include="resources\shaders\skybox.vert" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\camera.h" />
@@ -179,6 +181,12 @@
     <Image Include="resources\textures\earthp.jpg" />
     <Image Include="resources\textures\minato.jpg" />
     <Image Include="resources\textures\rock.png" />
+    <Image Include="resources\textures\skybox\back.jpg" />
+    <Image Include="resources\textures\skybox\bottom.jpg" />
+    <Image Include="resources\textures\skybox\front.jpg" />
+    <Image Include="resources\textures\skybox\left.jpg" />
+    <Image Include="resources\textures\skybox\right.jpg" />
+    <Image Include="resources\textures\skybox\top.jpg" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="resources\levels\level1.txt" />

@@ -14,6 +14,7 @@
 Camera* camera;
 Player* player;
 
+Cube* skyboxCube;
 
 Game::Game(unsigned int width, unsigned int height) : height(height), width(width), state(GAME_ACTIVE), keys()
 {
@@ -40,9 +41,11 @@ void Game::Init()
 	// load shaders
 	Shader shader = ResourceManager::LoadShader("resources/shaders/default.vert", "resources/shaders/default.frag", "default");
 	
+	ResourceManager::LoadShader("resources/shaders/skybox.vert", "resources/shaders/skybox.frag", "skybox");
+
 	player = new Player(glm::vec3(0.0f, 1.5f, 0.0f));
 	camera = new Camera(this->width, this->height, player);
-
+	skyboxCube = new Cube(glm::vec3(0), glm::vec3(10000));
 
 	Cube::initRender();
 
@@ -65,6 +68,17 @@ void Game::Init()
 	//// load textures
 	ResourceManager::LoadTexture("resources/textures/rock.png", true, "rock");
 	ResourceManager::LoadTexture("resources/textures/block_solid.png", false, "block_solid");
+
+	std::vector<const char*> files = {
+		"resources/textures/skybox/right.jpg",
+		"resources/textures/skybox/left.jpg",
+		"resources/textures/skybox/top.jpg",
+		"resources/textures/skybox/bottom.jpg",
+		"resources/textures/skybox/front.jpg",
+		"resources/textures/skybox/back.jpg",
+	};
+
+	ResourceManager::LoadTextureCubeMap(files, "skybox");
 	
 	//// load levels
 	
@@ -132,14 +146,25 @@ void Game::Update(float dt)
 void Game::Render()
 {
 	Shader shader = ResourceManager::GetShader("default");
+	Shader skyboxShader = ResourceManager::GetShader("skybox");
+
+	skyboxShader.Use();
+	camera->UpdateMatrix(45.0f, 0.1f, 100.0f);
+	camera->SetMatrix(skyboxShader, "camMatrix");
+
+	Texture block_solid = ResourceManager::GetTexture("block_solid");
+	Texture rock = ResourceManager::GetTexture("rock");
+	Texture skyboxTexture = ResourceManager::GetTexture("skybox");
+
+	glDepthFunc(GL_LEQUAL);
+	glDepthMask(GL_FALSE);
+	Cube::Draw(*skyboxCube, skyboxShader, skyboxTexture);
+	glDepthMask(GL_TRUE);
+	glDepthFunc(GL_LESS);
 
 	shader.Use();
 	camera->UpdateMatrix(45.0f, 0.1f, 100.0f);
 	camera->SetMatrix(shader, "camMatrix");
-
-	Texture block_solid = ResourceManager::GetTexture("block_solid");
-	Texture rock = ResourceManager::GetTexture("rock");
-
 
 	for (int i = 0; i < cubes.size(); i++) {
 		Cube::Draw(cubes[i], shader, block_solid);

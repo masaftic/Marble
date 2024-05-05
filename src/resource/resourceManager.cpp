@@ -38,6 +38,12 @@ Texture ResourceManager::LoadTexture(const char* file, bool alpha, std::string n
 	return Textures[name];
 }
 
+Texture ResourceManager::LoadTextureCubeMap(std::vector<const char*> files, std::string name)
+{
+	Textures[name] = loadCubeMapTextureFromFiles(files);
+	return Textures[name];
+}
+
 Texture ResourceManager::GetTexture(std::string name)
 {
 	return Textures[name];
@@ -82,5 +88,28 @@ Texture ResourceManager::loadTextureFromFile(const char* file, bool alpha)
 	stbi_image_free(data);
 
     return texture;
+}
+
+
+Texture ResourceManager::loadCubeMapTextureFromFiles(std::vector<const char*> files)
+{
+	int width, height, nrChannels;
+	std::vector<unsigned char*> faces;
+	for (int i = 0; i < files.size(); i++) {
+		unsigned char* data = stbi_load(files[i], &width, &height, &nrChannels, 0);
+		if (data == NULL) {
+			std::cout << "FAILED LOADING IMAGE " << files[i] << '\n';
+		}
+		faces.push_back(data);
+	}
+	
+	Texture texture;
+	texture.GenerateCubeMap(width, height, faces);
+
+	for (unsigned char* data : faces) {
+		stbi_image_free(data);
+	}
+
+	return texture;
 }
 

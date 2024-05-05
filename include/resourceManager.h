@@ -22,6 +22,7 @@ public:
 	static Shader GetShader(std::string name);
 	// loads (and generates) a texture from file
 	static Texture LoadTexture(const char* file, bool alpha, std::string name);
+	static Texture LoadTextureCubeMap(std::vector<const char*> files, std::string name);
 	// retrieves a stored texture
 	static Texture GetTexture(std::string name);
 
@@ -34,4 +35,6 @@ private:
 	static Shader  loadShaderFromFile(const char* vShaderFile, const char* fShaderFile);
 	// loads a single texture from file
 	static Texture loadTextureFromFile(const char* file, bool alpha);
+
+	static Texture loadCubeMapTextureFromFiles(std::vector<const char*> files);
 };
