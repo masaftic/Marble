@@ -2,7 +2,7 @@
 #include <glm/glm.hpp>
 
 
-Player::Player(glm::vec3 position) : speed(0.0f), maxSpeed(10.0f), acceleration(15.015f), friction(0.01f), jumpStrength(7.0f), isGrounded(false), rotationAngle(0.0f)
+Player::Player(glm::vec3 position) : speed(0.0f), maxSpeed(10.0f), acceleration(15.015f), friction(1.5f), jumpStrength(7.0f), isGrounded(false), rotationAngle(0.0f)
 {
     this->position = position;
     this->direction = glm::vec3(1.0f, 0, 1.0f);
@@ -51,6 +51,8 @@ void Player::Update(float deltaTime, std::vector<Cube>& cubes)
 {
     float currentSpeed = GetSpeed();
 
+
+    // apply friction
     if (currentSpeed > 0.0f) {
         glm::vec3 frictionForce = -friction * glm::normalize(velocity);
         glm::vec3 deltaV = frictionForce * deltaTime;
@@ -62,12 +64,7 @@ void Player::Update(float deltaTime, std::vector<Cube>& cubes)
         else {
             velocity += deltaV;
         }
-    } 
-
-
-    // Apply friction
-    velocity.x *= (1 - friction);
-    velocity.z *= (1 - friction);
+    }
 
     // Clamp velocity to max speed
     if (currentSpeed > maxSpeed) {
