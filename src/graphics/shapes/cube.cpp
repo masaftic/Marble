@@ -7,6 +7,13 @@ Cube::Cube(glm::vec3 position, glm::vec3 size)
     this->initRender();
 }
 
+Cube::Cube(const Cube& other)
+{
+    this->position = other.position;
+    this->size = other.size;
+    this->initRender();
+}
+
 void Cube::initRender()
 {
     float vertices[] = {

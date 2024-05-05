@@ -39,11 +39,11 @@ void Camera::Inputs(GLFWwindow* window, float dt)
 
 	if (glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS)
 	{
-		speed = 0.04f;
+		speed = 0.1f;
 	}
 	else if (glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_RELEASE)
 	{
-		speed = 0.01f;
+		speed = 0.03f;
 	}
 	// Handles mouse inputs
 	if (glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_LEFT) == GLFW_PRESS)
@@ -64,8 +64,6 @@ void Camera::Inputs(GLFWwindow* window, float dt)
 		// Fetches the coordinates of the cursor
 		glfwGetCursorPos(window, &mouseX, &mouseY);
 
-		// Normalizes and shifts the coordinates of the cursor such that they begin in the middle of the screen
-		// and then "transforms" them into degrees 
 		float rotY = sensitivity * (float)(mouseY - (height / 2)) / height;
 		float rotX = sensitivity * (float)(mouseX - (width / 2)) / width;
 
@@ -100,14 +98,16 @@ float Camera::CalculateVerticalDistance()
 	return this->distanceFromPlayer * glm::sin(glm::radians(pitch));
 }
 
+
+
 void Camera::CalculateCameraPos(float horizontalDistance, float verticalDistance)
 {
 	float theta = this->angleAroundPlayer;
 
 	float offsetX = horizontalDistance * glm::sin(theta);
 	float offsetZ = horizontalDistance * glm::cos(theta);
-	position.x = player->position.x - offsetX;
-	position.z = player->position.z - offsetZ;
-	position.y = player->position.y + verticalDistance;
+
+	glm::vec3 targetPosition = player->position + glm::vec3(-offsetX, verticalDistance, -offsetZ);
+	position = targetPosition;
 }
 

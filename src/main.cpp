@@ -43,8 +43,11 @@ int main()
     glfwSetKeyCallback(window, key_callback);
     glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
 
-    //Load GLAD so it configures OpenGL
-    gladLoadGL();
+    if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
+        std::cout << "Failed to load GLAD" << std::endl;
+        glfwTerminate();
+        return -1;
+    }
 
 
     glViewport(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
@@ -61,6 +64,7 @@ int main()
     int frameCount = 0;
     float lastTime = glfwGetTime();
     
+    glfwSwapInterval(1);
 
     // Main while loop
     while (!glfwWindowShouldClose(window))

@@ -43,6 +43,16 @@ void Game::Init()
 	player = new Player(glm::vec3(0.0f, 1.5f, 0.0f));
 	camera = new Camera(this->width, this->height, player);
 
+	Cube cube1(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(5.0f, 1.0f, 5.0f));
+	Cube cube2(glm::vec3(0.0f, 0.0f, 5.0f), glm::vec3(5.0f, 1.0f, 5.0f));
+	Cube cube3(glm::vec3(5.0f, 0.0f, 0.0f), glm::vec3(5.0f, 1.0f, 5.0f));
+	Cube cube4(glm::vec3(5.0f, 0.0f, 5.0f), glm::vec3(5.0f, 1.0f, 5.0f));
+	Cube cube5(glm::vec3(5.0f, 2.0f, 5.0f), glm::vec3(5.0f, 1.0f, 5.0f));
+	cubes.push_back(cube1);
+	cubes.push_back(cube2);
+	cubes.push_back(cube3);
+	cubes.push_back(cube4);
+	cubes.push_back(cube5);
 
 	//// load textures
 	ResourceManager::LoadTexture("resources/textures/rock.png", true, "rock");
@@ -50,6 +60,11 @@ void Game::Init()
 	
 	//// load levels
 	
+}
+
+void Game::Reset()
+{
+	player->position = glm::vec3(0.0f, 1.5f, 0.0f);
 }
 
 void Game::ProcessInput(GLFWwindow* window, float dt)
@@ -61,36 +76,44 @@ void Game::ProcessInput(GLFWwindow* window, float dt)
 		if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
 		{
 			player->direction = glm::normalize(cameraDirection);
-			player->MoveForward();
+			player->MoveForward(dt);
 		}
 		if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
 		{
 			player->direction = glm::normalize(cameraDirection);
-			player->MoveBackward();
+			player->MoveBackward(dt);
 		}
 		if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
 		{
 			player->direction = glm::normalize(cameraDirection);
-			player->StrafeRight();
+			player->StrafeRight(dt);
 		}
 		if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
 		{
 			player->direction = glm::normalize(cameraDirection);
-			player->StrafeLeft();
+			player->StrafeLeft(dt);
 		}
-
+		if (glfwGetKey(window, GLFW_KEY_R) == GLFW_PRESS)
+		{
+			Reset();
+		}
 		camera->Inputs(window, dt);
 	}
 }
 
 
+
 void Game::Update(float dt)
-{
-	player->Update(dt);
-	
-	//auto v = player->velocity;
-	//std::cout << std::setprecision(2) << std::fixed;
-	//std::cout << v.x << " " << v.y << " " << v.z << '\n';
+{	
+	player->Update(dt, cubes);
+	if (player->position.y < -10) {
+		Reset();
+	}
+
+
+	auto v = player->velocity;
+	std::cout << std::setprecision(2) << std::fixed;
+	std::cout << v.x << " " << v.y << " " << v.z << '\n';
 }
 
 
@@ -105,17 +128,12 @@ void Game::Render()
 	Texture block_solid = ResourceManager::GetTexture("block_solid");
 	Texture rock = ResourceManager::GetTexture("rock");
 
-	Cube cube1(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(5.0f, 1.0f, 5.0f));
-	Cube cube2(glm::vec3(0.0f, 0.0f, 5.0f), glm::vec3(5.0f, 1.0f, 5.0f));
-	Cube cube3(glm::vec3(5.0f, 0.0f, 0.0f), glm::vec3(5.0f, 1.0f, 5.0f));
-	Cube cube4(glm::vec3(5.0f, 0.0f, 5.0f), glm::vec3(5.0f, 1.0f, 5.0f));
-	cube4.color = glm::vec3(1.0f, 0.5f, 0.2f);
 
-	cube1.Draw(shader, block_solid);
-	cube2.Draw(shader, block_solid);
-	cube3.Draw(shader, block_solid);
-	cube4.Draw(shader, block_solid);
+	for (int i = 0; i < cubes.size(); i++) {
+		cubes[i].Draw(shader, block_solid);
+	}
 
 	player->Draw(shader, rock);
 }
+
 

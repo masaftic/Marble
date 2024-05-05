@@ -15,6 +15,7 @@ public:
 	glm::vec3 color = glm::vec3(1.0f);
 
 	Cube(glm::vec3 position, glm::vec3 size);
+	Cube(const Cube& other);
 
 	VAO vao;
 
