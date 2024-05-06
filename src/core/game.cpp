@@ -15,6 +15,8 @@ Camera* camera;
 Player* player;
 
 Cube* skyboxCube;
+Cube* lightSource;
+glm::vec4 lightColor;
 
 Game::Game(unsigned int width, unsigned int height) : height(height), width(width), state(GAME_ACTIVE), keys()
 {
@@ -43,9 +45,17 @@ void Game::Init()
 	
 	ResourceManager::LoadShader("resources/shaders/skybox.vert", "resources/shaders/skybox.frag", "skybox");
 
+	ResourceManager::LoadShader("resources/shaders/light.vert", "resources/shaders/light.frag", "light");
+
+
 	player = new Player(glm::vec3(0.0f, 1.5f, 0.0f));
 	camera = new Camera(this->width, this->height, player);
 	skyboxCube = new Cube(glm::vec3(0), glm::vec3(10000));
+	lightSource = new Cube(glm::vec3(0, 5, 0), glm::vec3(1));
+	lightSource->position = glm::vec3(-100, 100, -150);
+	// lightSource->position = glm::vec3(0, 100, 0);
+
+	lightColor = glm::vec4(1.0, 1.0, 0.95, 1.0f);
 
 	Cube::initRender();
 
@@ -62,7 +72,7 @@ void Game::Init()
 
 	for (int i = 0; i < 1; i++) {
 		Cube cube35(glm::vec3(5.0f, 2.0f, 5.0f), glm::vec3(5.0f, 1.0f, 5.0f));
-		cubes.push_back(cube35);
+		//cubes.push_back(cube35);
 	}
 
 	//// load textures
@@ -136,7 +146,7 @@ void Game::Update(float dt)
 		Reset();
 	}
 
-
+	
 	auto v = player->velocity;
 	std::cout << std::setprecision(2) << std::fixed;
 	// std::cout << v.x << " " << v.y << " " << v.z << '\n';
@@ -145,16 +155,19 @@ void Game::Update(float dt)
 
 void Game::Render()
 {
-	Shader shader = ResourceManager::GetShader("default");
+	Texture block_solid = ResourceManager::GetTexture("block_solid");
+	Texture rock = ResourceManager::GetTexture("rock");
+	Texture skyboxTexture = ResourceManager::GetTexture("skybox");
+
+	Shader defaultShader = ResourceManager::GetShader("default");
+	Shader lightShader = ResourceManager::GetShader("light");
 	Shader skyboxShader = ResourceManager::GetShader("skybox");
+
+	
 
 	skyboxShader.Use();
 	camera->UpdateMatrix(45.0f, 0.1f, 100.0f);
 	camera->SetMatrix(skyboxShader, "camMatrix");
-
-	Texture block_solid = ResourceManager::GetTexture("block_solid");
-	Texture rock = ResourceManager::GetTexture("rock");
-	Texture skyboxTexture = ResourceManager::GetTexture("skybox");
 
 	glDepthFunc(GL_LEQUAL);
 	glDepthMask(GL_FALSE);
@@ -162,15 +175,31 @@ void Game::Render()
 	glDepthMask(GL_TRUE);
 	glDepthFunc(GL_LESS);
 
-	shader.Use();
+
+
+
+	lightShader.Use();
 	camera->UpdateMatrix(45.0f, 0.1f, 100.0f);
-	camera->SetMatrix(shader, "camMatrix");
+	camera->SetMatrix(lightShader, "camMatrix");
+	lightShader.setVec4("lightColor", lightColor);
+
+	Cube::Draw(*lightSource, lightShader, block_solid);
+
+
+
+
+	defaultShader.Use();
+	camera->UpdateMatrix(45.0f, 0.1f, 100.0f);
+	camera->SetMatrix(defaultShader, "camMatrix");
+	defaultShader.setVec4("lightColor", lightColor);
+	defaultShader.setVec3("lightPos", lightSource->position);
+	defaultShader.setVec3("camPos", camera->position);
 
 	for (int i = 0; i < cubes.size(); i++) {
-		Cube::Draw(cubes[i], shader, block_solid);
+		Cube::Draw(cubes[i], defaultShader, block_solid);
 	}
 
-	player->Draw(shader, rock);
+	player->Draw(defaultShader, rock);
 }
 
 

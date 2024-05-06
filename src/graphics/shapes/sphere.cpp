@@ -65,12 +65,13 @@ void Sphere::InitRender()
 	this->vao.Bind();
 	VBO vbo(this->vertices.data(), (unsigned int)this->vertices.size() * sizeof(float));
 	VBO vbotex(this->texCoords.data(), (unsigned int)this->texCoords.size() * sizeof(float));
+	VBO vbonormals(this->normals.data(), (unsigned int)this->normals.size() * sizeof(float));
 
 	EBO ebo(this->indices.data(), (unsigned int)this->indices.size() * sizeof(int));
 
-	this->vao.LinkAtrrib(vbo, this->attribVert, 3, GL_FLOAT, 3 * sizeof(float), (void*)0);
-	this->vao.LinkAtrrib(vbotex, this->attribTex, 2, GL_FLOAT, 2 * sizeof(float), (void*)0);
-	// this->vao.LinkAtrrib(vbotex, this->attribNorm, 3, GL_FLOAT, 2 * sizeof(float), (void*)(0));
+	this->vao.LinkAtrrib(vbo, 0, 3, GL_FLOAT, 3 * sizeof(float), (void*)0);
+	this->vao.LinkAtrrib(vbotex, 1, 2, GL_FLOAT, 2 * sizeof(float), (void*)0);
+	this->vao.LinkAtrrib(vbonormals, 2, 3, GL_FLOAT, 3 * sizeof(float), (void*)(0));
 
 	vbotex.Unbind();
 	vbo.Unbind();
@@ -83,6 +84,8 @@ void Sphere::InitRender()
 void Sphere::Draw(Shader& shader, Texture& texture)
 {
 	shader.Use();
+
+	shader.setVec3("color", glm::vec3(1.0f));
 
 	glActiveTexture(GL_TEXTURE0);
 	texture.Bind();

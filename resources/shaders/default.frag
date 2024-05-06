@@ -1,18 +1,36 @@
 #version 330 core
 
 in vec2 TexCoords;
+in vec3 Normals;
+in vec3 currentPos;
 
 out vec4 FragColor;
 
-// Gets the Texture Unit from the main function
 uniform sampler2D tex;
 uniform vec3 color;
+uniform vec4 lightColor;
+uniform vec3 lightPos;
+uniform vec3 camPos;
+
 
 
 void main()
 {
-	FragColor = vec4(color, 1.0) * texture(tex, TexCoords);
-	// FragColor = texture(tex0, texCoord) * vec4(ourColor, 1.0);
-	// FragColor = texture(image, TexCoords);
-	// FragColor = vec4(1.0f, 0.4f, 1.0f, 1.0f);
+	///// alot of light calculations i don't understand /////
+
+	vec3 normal = normalize(Normals);
+	vec3 lightDirection = normalize(lightPos - currentPos);
+
+	float ambient = 0.4f;
+	float diffuse = max(dot(normal, lightDirection), 0.0f) * 0.7f;
+
+	float specularLight = 0.5f; // Increase the specular intensity
+	vec3 viewDirection = normalize(camPos - currentPos);
+	vec3 reflectionDirection = reflect(-lightDirection, normal);
+	float specAmount = pow(max(dot(viewDirection, reflectionDirection), 0.0f), 26);
+	float specular = specularLight * specAmount;
+
+
+
+	FragColor = texture(tex, TexCoords) * (diffuse + ambient + specular) * lightColor;
 }
