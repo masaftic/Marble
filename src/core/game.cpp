@@ -51,9 +51,8 @@ void Game::Init()
 	player = new Player(glm::vec3(0.0f, 1.5f, 0.0f));
 	camera = new Camera(this->width, this->height, player);
 	skyboxCube = new Cube(glm::vec3(0), glm::vec3(10000));
-	lightSource = new Cube(glm::vec3(0, 5, 0), glm::vec3(1));
-	lightSource->position = glm::vec3(-100, 100, -150);
-	// lightSource->position = glm::vec3(0, 100, 0);
+	lightSource = new Cube(glm::vec3(0), glm::vec3(0));
+	// light source direction is set in the fragment shader because it is like a sun not a point
 
 	lightColor = glm::vec4(1.0, 1.0, 0.95, 1.0f);
 

@@ -19,7 +19,9 @@ void main()
 	///// alot of light calculations i don't understand /////
 
 	vec3 normal = normalize(Normals);
-	vec3 lightDirection = normalize(lightPos - currentPos);
+
+	                                // sun direction
+	vec3 lightDirection = normalize(vec3(-10.0f, 10.0f, -10.0f));
 
 	float ambient = 0.4f;
 	float diffuse = max(dot(normal, lightDirection), 0.0f) * 0.7f;
