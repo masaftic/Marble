@@ -2,7 +2,7 @@
 #include <glm/glm.hpp>
 
 
-Player::Player(glm::vec3 position) : speed(0.0f), maxSpeed(10.0f), acceleration(15.015f), friction(1.5f), jumpStrength(7.0f), isGrounded(false), rotationAngle(0.0f)
+Player::Player(glm::vec3 position) : speed(0.0f), maxSpeed(15.0f), acceleration(15.015f), friction(1.5f), jumpStrength(7.0f), isGrounded(false), rotationAngle(0.0f)
 {
     this->position = position;
     this->direction = glm::vec3(1.0f, 0, 1.0f);
@@ -47,13 +47,15 @@ void Player::Jump()
     }
 }
 
+
+
 void Player::Update(float deltaTime, std::vector<Cube>& cubes)
 {
     float currentSpeed = GetSpeed();
 
 
     // apply friction
-    if (currentSpeed > 0.0f) {
+    if (currentSpeed > 0.0f && isGrounded) {
         glm::vec3 frictionForce = -friction * glm::normalize(velocity);
         glm::vec3 deltaV = frictionForce * deltaTime;
 
@@ -67,9 +69,10 @@ void Player::Update(float deltaTime, std::vector<Cube>& cubes)
     }
 
     // Clamp velocity to max speed
-    if (currentSpeed > maxSpeed) {
-        velocity.x = (velocity.x / currentSpeed) * maxSpeed;
-        velocity.z = (velocity.z / currentSpeed) * maxSpeed;
+    float horizontalSpeed = glm::length(glm::vec3(velocity.x, 0, velocity.z));
+    if (horizontalSpeed > maxSpeed) {
+        velocity.x = (velocity.x / horizontalSpeed) * maxSpeed;
+        velocity.z = (velocity.z / horizontalSpeed) * maxSpeed;
     }
 
     // Reset isGrounded to false at the start of each update
@@ -174,6 +177,7 @@ void Player::ResolveCollision(glm::vec3 closestPoint) {
 
         // Move the sphere out of the cube along the collision normal
         this->position += collisionDepth * collisionNormal;
+        this->velocity += 5 * collisionDepth * collisionNormal;
     }
 }
 

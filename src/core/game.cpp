@@ -58,21 +58,40 @@ void Game::Init()
 
 	Cube::initRender();
 
-	Cube cube1(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(5.0f, 1.0f, 5.0f));
-	Cube cube2(glm::vec3(0.0f, 0.0f, 5.0f), glm::vec3(5.0f, 1.0f, 5.0f));
-	Cube cube3(glm::vec3(5.0f, 0.0f, 0.0f), glm::vec3(5.0f, 1.0f, 5.0f));
-	Cube cube4(glm::vec3(5.0f, 0.0f, 5.0f), glm::vec3(5.0f, 1.0f, 5.0f));
-	Cube cube5(glm::vec3(5.0f, 2.0f, 5.0f), glm::vec3(5.0f, 1.0f, 5.0f));
-	cubes.push_back(cube1);
-	cubes.push_back(cube2);
-	cubes.push_back(cube3);
-	cubes.push_back(cube4);
-	cubes.push_back(cube5);
+	cubes.push_back(Cube(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(5.0f, 1.0f, 5.0f)));
+	cubes.push_back(Cube(glm::vec3(0.0f, 0.0f, 5.0f), glm::vec3(5.0f, 1.0f, 5.0f)));
+	cubes.push_back(Cube(glm::vec3(5.0f, 0.0f, 0.0f), glm::vec3(5.0f, 1.0f, 5.0f)));
+	cubes.push_back(Cube(glm::vec3(5.0f, 0.0f, 5.0f), glm::vec3(5.0f, 1.0f, 5.0f)));
+	cubes.push_back(Cube(glm::vec3(5.0f, 2.0f, 5.0f), glm::vec3(5.0f, 1.0f, 5.0f)));
 
-	for (int i = 0; i < 1; i++) {
-		Cube cube35(glm::vec3(5.0f, 2.0f, 5.0f), glm::vec3(5.0f, 1.0f, 5.0f));
-		//cubes.push_back(cube35);
+	glm::vec3 poss = glm::vec3(5.0f, 2.0f, 5.0f);
+
+	for (int ringSize = 6; ringSize > 0; ringSize--) {
+		for (int i = 0; i < ringSize; i++) {
+			poss.x += 5;
+			cubes.push_back(Cube(poss, glm::vec3(5.0f, 1.0f, 5.0f)));
+		}
+
+		for (int i = 0; i < ringSize; i++) {
+			poss.z += 5;
+			cubes.push_back(Cube(poss, glm::vec3(5.0f, 1.0f, 5.0f)));
+		}
+
+		for (int i = 0; i < ringSize; i++) {
+			poss.x -= 5;
+			cubes.push_back(Cube(poss, glm::vec3(5.0f, 1.0f, 5.0f)));
+		}
+
+		for (int i = 0; i < ringSize; i++) {
+			poss.z -= 5;
+			cubes.push_back(Cube(poss, glm::vec3(5.0f, 1.0f, 5.0f)));
+		}
+		poss.x += 10;
+		poss.z += 10;
+		poss.y += 2;
 	}
+
+
 
 	//// load textures
 	ResourceManager::LoadTexture("resources/textures/rock.png", true, "rock");
@@ -96,7 +115,10 @@ void Game::Init()
 void Game::Reset()
 {
 	player->position = glm::vec3(0.0f, 1.5f, 0.0f);
+	player->velocity = glm::vec3(0);
+
 }
+
 
 void Game::ProcessInput(GLFWwindow* window, float dt)
 {
@@ -147,8 +169,9 @@ void Game::Update(float dt)
 
 	
 	auto v = player->velocity;
+	auto d = player->direction;
 	std::cout << std::setprecision(2) << std::fixed;
-	// std::cout << v.x << " " << v.y << " " << v.z << '\n';
+	// std::cout << v.x << " " << v.y << " "  << v.z << " " << player->isGrounded << "\n";
 }
 
 
