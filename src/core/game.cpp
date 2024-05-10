@@ -166,12 +166,6 @@ void Game::Update(float dt)
 	if (player->position.y < -10) {
 		Reset();
 	}
-
-	
-	auto v = player->velocity;
-	auto d = player->direction;
-	std::cout << std::setprecision(2) << std::fixed;
-	// std::cout << v.x << " " << v.y << " "  << v.z << " " << player->isGrounded << "\n";
 }
 
 

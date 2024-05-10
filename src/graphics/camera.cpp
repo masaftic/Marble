@@ -30,11 +30,13 @@ void Camera::Inputs(GLFWwindow* window, float dt)
 	// Handles key inputs
 	if (glfwGetKey(window, GLFW_KEY_Q) == GLFW_PRESS)
 	{
-		this->distanceFromPlayer += this->speed;
+		if (this->distanceFromPlayer < 17)
+			this->distanceFromPlayer += this->speed;
 	}
 	if (glfwGetKey(window, GLFW_KEY_E) == GLFW_PRESS)
 	{
-		this->distanceFromPlayer -= this->speed;
+		if (this->distanceFromPlayer > 3)
+			this->distanceFromPlayer -= this->speed;
 	}
 
 	if (glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS)
