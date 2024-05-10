@@ -81,7 +81,6 @@ void Player::Update(float deltaTime, std::vector<Cube>& cubes)
     for (int i = 0; i < cubes.size(); i++) {
         std::pair<bool, glm::vec3> collision = CheckCollision(cubes[i]);
         if (collision.first) {
-            // Check if the player is on top of the cube
             float cubeTop = cubes[i].position.y + cubes[i].size.y / 2;
             float cubeLeft = cubes[i].position.x - cubes[i].size.x / 2;
             float cubeRight = cubes[i].position.x + cubes[i].size.x / 2;
@@ -91,7 +90,7 @@ void Player::Update(float deltaTime, std::vector<Cube>& cubes)
             bool isCenterInsideCube = this->position.x > cubeLeft && this->position.x < cubeRight &&
                 this->position.z > cubeFront && this->position.z < cubeBack;
 
-
+            // Check if the player is on top of the cube
             if (this->position.y >= cubeTop && isCenterInsideCube) {
                 this->position.y = cubeTop + this->radius; // Adjust position to be on top of the cube
                 this->velocity.y = 0; // Player is grounded

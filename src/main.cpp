@@ -7,7 +7,6 @@
 
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
-void key_callback(GLFWwindow* window, int key, int scancode, int action, int mode);
 
 const unsigned int SCREEN_WIDTH  = 1000;
 const unsigned int SCREEN_HEIGHT = 800;
@@ -40,7 +39,6 @@ int main()
     // Introduce the window into the current context
     glfwMakeContextCurrent(window);
 
-    glfwSetKeyCallback(window, key_callback);
     glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
 
     if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
@@ -52,7 +50,6 @@ int main()
 
     glViewport(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
     glEnable(GL_BLEND);
-    // glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     glEnable(GL_DEPTH_TEST);
     glEnable(GL_MULTISAMPLE);
 
@@ -96,7 +93,7 @@ int main()
 
         glfwPollEvents();
 
-        Marble.ProcessInput(window, deltaTime); // shouldn't pass window
+        Marble.ProcessInput(window, deltaTime); 
 
         Marble.Update(deltaTime);
 
@@ -112,20 +109,6 @@ int main()
     return 0;
 }
 
-// not useful for now
-void key_callback(GLFWwindow* window, int key, int scancode, int action, int mode)
-{
-    // when a user presses the escape key, we set the WindowShouldClose property to true, closing the application
-    if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
-        glfwSetWindowShouldClose(window, true);
-    if (key >= 0 && key < 1024)
-    {
-        if (action == GLFW_PRESS)
-            Marble.keys[key] = true;
-        else if (action == GLFW_RELEASE)
-            Marble.keys[key] = false;
-    }
-}
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height)
 {
