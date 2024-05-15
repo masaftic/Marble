@@ -152,6 +152,9 @@ void Game::Update(float dt)
 	player->Update(dt, levels[levelNumber]);
 	if (player->IsAtEnd(levels[levelNumber])) {
 		// goto next level;
+		if (levelNumber == 3) {
+			levelNumber = 0;
+		}
 		levelNumber++;
 		Reset();
 	}
