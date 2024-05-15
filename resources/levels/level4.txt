@@ -1,6 +1,51 @@
-1 2 1 2 1 2 1 2 1 2 1 2 1
-2 2 2 2 2 2 2 2 2 2 2 2 2
-2 1 3 1 4 1 5 1 4 1 3 1 2
-2 3 3 4 4 5 5 5 4 4 3 3 2
-2 1 3 1 4 1 5 1 4 1 3 1 2
-2 2 3 3 4 4 5 4 4 3 3 2 2
+0.0 0.0 0.0 5.0 1.0 5.0       // Starting platform
+0.0 0.0 5.0 5.0 1.0 5.0       // Connecting platform
+5.0 0.0 5.0 5.0 1.0 5.0       // Main platform
+
+// Swinging section
+10.0 1.0 10.0 2.0 1.0 2.0     // Swing point 1
+15.0 2.0 15.0 2.0 1.0 2.0     // Swing point 2 (elevated)
+20.0 3.0 20.0 2.0 1.0 2.0     // Swing point 3 (higher elevation)
+25.0 4.0 25.0 2.0 1.0 2.0     // Swing point 4 (highest elevation)
+30.0 4.0 30.0 5.0 1.0 5.0     // Landing platform
+
+// Wall-crawling section
+35.0 6.0 35.0 1.0 3.0 10.0    // Wall to crawl 1
+35.0 8.0 45.0 1.0 3.0 10.0    // Wall to crawl 2 (horizontal)
+35.0 12.0 55.0 5.0 1.0 5.0    // Landing platform
+
+// Agility challenge section
+40.0 12.0 55.0 5.0 1.0 5.0    // Platform before obstacles
+45.0 12.0 60.0 5.0 1.0 5.0    // Obstacle platform 1 (with spinning blades)
+50.0 12.0 65.0 5.0 1.0 5.0    // Obstacle platform 2 (with moving spikes)
+55.0 12.0 70.0 5.0 1.0 5.0    // Obstacle platform 3 (with laser beams)
+60.0 12.0 75.0 5.0 1.0 5.0    // Safe platform
+
+// High jump and web-swing section
+65.0 12.0 75.0 5.0 1.0 5.0    // Pathway to high jump
+70.0 14.0 80.0 5.0 1.0 5.0    // Elevated platform 1
+75.0 16.0 85.0 5.0 1.0 5.0    // Elevated platform 2
+80.0 18.0 90.0 5.0 1.0 5.0    // High jump 1
+85.0 20.0 95.0 5.0 1.0 5.0    // High jump 2
+90.0 22.0 100.0 5.0 1.0 5.0   // Landing platform
+
+// Speed boost and web-zip section
+95.0 22.0 100.0 5.0 1.0 5.0   // Pathway to speed boost
+100.0 22.0 105.0 5.0 1.0 5.0  // Speed boost platform 1
+105.0 22.0 110.0 5.0 1.0 5.0  // Speed boost platform 2
+110.0 22.0 115.0 5.0 1.0 5.0  // Speed boost platform 3
+115.0 22.0 120.0 5.0 1.0 5.0  // Safe platform
+
+// Web-zip to trampolines
+120.0 22.0 120.0 5.0 1.0 5.0  // Pathway to trampolines
+125.0 22.0 125.0 5.0 1.0 5.0  // Trampoline 1
+130.0 22.0 130.0 5.0 1.0 5.0  // Trampoline 2
+135.0 22.0 135.0 5.0 1.0 5.0  // Trampoline 3
+140.0 22.0 140.0 5.0 1.0 5.0  // Landing platform
+
+// Final challenge section
+145.0 22.0 140.0 5.0 1.0 5.0  // Pathway to final challenge
+150.0 22.0 145.0 5.0 1.0 5.0  // Final challenge platform 1 (with rotating obstacles)
+155.0 22.0 150.0 5.0 1.0 5.0  // Final challenge platform 2 (with moving walls)
+160.0 22.0 155.0 5.0 1.0 5.0  // Final challenge platform 3 (with falling floors)
+165.0 22.0 160.0 5.0 1.0 5.0  // Goal platform

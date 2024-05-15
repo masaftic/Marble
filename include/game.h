@@ -37,7 +37,5 @@ public:
 
 	void UpdateResolution(int width, int height);
 	void Render();
-
-
 };
 

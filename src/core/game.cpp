@@ -57,92 +57,6 @@ void Game::Init()
 	lightColor = glm::vec4(1.0, 1.0, 0.95, 1.0f);
 
 	Cube::initRender();
-
-  /*cubes.push_back(Cube(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(5.0f, 1.0f, 5.0f)));
-	cubes.push_back(Cube(glm::vec3(0.0f, 0.0f, 5.0f), glm::vec3(5.0f, 1.0f, 5.0f)));
-	cubes.push_back(Cube(glm::vec3(5.0f, 0.0f, 0.0f), glm::vec3(5.0f, 1.0f, 5.0f)));
-	cubes.push_back(Cube(glm::vec3(5.0f, 0.0f, 5.0f), glm::vec3(5.0f, 1.0f, 5.0f)));
-	cubes.push_back(Cube(glm::vec3(5.0f, 2.0f, 5.0f), glm::vec3(5.0f, 1.0f, 5.0f)));
-
-	glm::vec3 poss = glm::vec3(5.0f, 2.0f, 5.0f);
-
-	for (int ringSize = 6; ringSize > 0; ringSize--) {
-		for (int i = 0; i < ringSize; i++) {
-			poss.x += 5;
-			cubes.push_back(Cube(poss, glm::vec3(5.0f, 1.0f, 5.0f)));
-		}
-
-		for (int i = 0; i < ringSize; i++) {
-			poss.z += 5;
-			cubes.push_back(Cube(poss, glm::vec3(5.0f, 1.0f, 5.0f)));
-		}
-
-		for (int i = 0; i < ringSize; i++) {
-			poss.x -= 5;
-			cubes.push_back(Cube(poss, glm::vec3(5.0f, 1.0f, 5.0f)));
-		}
-
-		for (int i = 0; i < ringSize; i++) {
-			poss.z -= 5;
-			cubes.push_back(Cube(poss, glm::vec3(5.0f, 1.0f, 5.0f)));
-		}
-		poss.x += 10;
-		poss.z += 10;
-		poss.y += 2;
-	}
-
-	cubes.back().isEnd = 1;*/
-	
-	/*{
-		std::vector<Cube> cubes;
-		glm::vec3 poss = glm::vec3(5.0f, 2.0f, 5.0f);
-
-		for (int ringSize = 6; ringSize > 0; ringSize--) {
-			for (int i = 0; i < ringSize; i++) {
-				poss.x += 5;
-				cubes.push_back(Cube(poss, glm::vec3(5.0f, 1.0f, 5.0f)));
-			}
-
-			for (int i = 0; i < ringSize; i++) {
-				poss.z += 5;
-				cubes.push_back(Cube(poss, glm::vec3(5.0f, 1.0f, 5.0f)));
-			}
-
-			for (int i = 0; i < ringSize; i++) {
-				poss.x -= 5;
-				cubes.push_back(Cube(poss, glm::vec3(5.0f, 1.0f, 5.0f)));
-			}
-
-			for (int i = 0; i < ringSize; i++) {
-				poss.z -= 5;
-				cubes.push_back(Cube(poss, glm::vec3(5.0f, 1.0f, 5.0f)));
-			}
-			poss.x += 10;
-			poss.z += 10;
-			poss.y += 2;
-		}
-		for (int i = 0; i < cubes.size(); i++) {
-			std::cout << cubes[i].position.x << " " << cubes[i].position.y << " " << cubes[i].position.z << " " << cubes[i].size.x << " " << cubes[i].size.y << " " << cubes[i].size.x << "\n";
-		}
-	}*/
-	
-	for (int levelNum = 1; levelNum <= 1; levelNum++) {
-		std::ifstream levelFile("resources/levels/level" + std::to_string(levelNum) + ".txt");
-		if (!levelFile.good()) {
-			std::cout << "BAD\n";
-		}
-		std::vector<Cube> cubes;
-		std::string line;
-		while (std::getline(levelFile, line)) {
-			std::istringstream iss(line);
-			float x, y, z, sizeX, sizeY, sizeZ;
-			if (!(iss >> x >> y >> z >> sizeX >> sizeY >> sizeZ)) { break; } // error
-			cubes.push_back(Cube(glm::vec3(x, y, z), glm::vec3(sizeX, sizeY, sizeZ)));
-		}
-		levels.push_back(cubes);
-		levels[levelNum - 1].back().isEnd = 1;
-	}
-
 	
 
 	//// load textures
@@ -162,12 +76,32 @@ void Game::Init()
 	ResourceManager::LoadTextureCubeMap(files, "skybox");
 	
 	//// load levels
-	
+	for (int levelNum = 1; levelNum <= 4; levelNum++) {
+		std::ifstream levelFile("resources/levels/level" + std::to_string(levelNum) + ".txt");
+		if (!levelFile.good()) {
+			std::cout << "BAD\n";
+		}
+		std::vector<Cube> cubes;
+		std::string line;
+		while (std::getline(levelFile, line)) {
+			if (line.empty() || line[0] == '/') continue;
+			std::istringstream iss(line);
+			float x, y, z, sizeX, sizeY, sizeZ;
+			if (!(iss >> x >> y >> z >> sizeX >> sizeY >> sizeZ)) {
+				std::cout << "FAILED TO READ LINE: " << line << "\n";
+				break;
+			} // error
+			cubes.push_back(Cube(glm::vec3(x, y, z), glm::vec3(sizeX, sizeY, sizeZ)));
+		}
+		levels.push_back(cubes);
+		levels[levelNum - 1].back().isEnd = 1;
+	}
 }
 
 void Game::Reset()
 {
-	player->position = glm::vec3(0.0f, 1.5f, 0.0f);
+	player->position = levels[levelNumber][0].position;
+	player->position.y += 2;
 	player->velocity = glm::vec3(0);
 
 }
@@ -217,8 +151,9 @@ void Game::Update(float dt)
 {	
 	player->Update(dt, levels[levelNumber]);
 	if (player->IsAtEnd(levels[levelNumber])) {
-		std::cout << "END\n";
 		// goto next level;
+		levelNumber++;
+		Reset();
 	}
 	if (player->position.y < -10) {
 		Reset();
