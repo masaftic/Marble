@@ -20,6 +20,6 @@ public:
 	static VAO* vao;
 
 	static void initRender();
-	static void Draw(Cube& cube, Shader& shader, Texture& texture);
+	void Draw(Shader& shader, Texture& texture);
 };
 

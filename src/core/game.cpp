@@ -96,6 +96,7 @@ void Game::Init()
 	//// load textures
 	ResourceManager::LoadTexture("resources/textures/rock.png", true, "rock");
 	ResourceManager::LoadTexture("resources/textures/block_solid.png", false, "block_solid");
+	ResourceManager::LoadTexture("resources/textures/checkers.png", true, "checkers");
 
 	std::vector<const char*> files = {
 		"resources/textures/skybox/right.jpg",
@@ -187,7 +188,7 @@ void Game::Render()
 
 	glDepthFunc(GL_LEQUAL);
 	glDepthMask(GL_FALSE);
-	Cube::Draw(*skyboxCube, skyboxShader, skyboxTexture);
+	skyboxCube->Draw(skyboxShader, skyboxTexture);
 	glDepthMask(GL_TRUE);
 	glDepthFunc(GL_LESS);
 
@@ -199,7 +200,7 @@ void Game::Render()
 	camera->SetMatrix(lightShader, "camMatrix");
 	lightShader.setVec4("lightColor", lightColor);
 
-	Cube::Draw(*lightSource, lightShader, block_solid);
+	lightSource->Draw(lightShader, block_solid);
 
 
 
@@ -212,7 +213,7 @@ void Game::Render()
 	defaultShader.setVec3("camPos", camera->position);
 
 	for (int i = 0; i < cubes.size(); i++) {
-		Cube::Draw(cubes[i], defaultShader, block_solid);
+		cubes[i].Draw(defaultShader, block_solid);
 	}
 
 	player->Draw(defaultShader, rock);

@@ -79,17 +79,17 @@ void Cube::initRender()
 }
 
 
-void Cube::Draw(Cube& cube, Shader& shader, Texture& texture)
+void Cube::Draw(Shader& shader, Texture& texture)
 {
     shader.Use();
 
     glm::mat4 model = glm::mat4(1.0f);
-    model = glm::translate(model, cube.position);
-    model = glm::rotate(model, cube.rotate, cube.rotationAxis);
-    model = glm::scale(model, cube.size);
+    model = glm::translate(model, this->position);
+    model = glm::rotate(model, this->rotate, this->rotationAxis);
+    model = glm::scale(model, this->size);
 
     shader.setMat4("model", model);
-    shader.setVec3("color", cube.color);
+    shader.setVec3("color", this->color);
 
 
     glActiveTexture(GL_TEXTURE0);
