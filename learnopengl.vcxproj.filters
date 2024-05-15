@@ -42,9 +42,6 @@
     <ClCompile Include="src\resource\resourceManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\level\gameLevel.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\core\player.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -101,9 +98,6 @@
     <ClInclude Include="include\resourceManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\gameLevel.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="include\player.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -155,6 +149,9 @@
       <Filter>Resource Files</Filter>
     </Image>
     <Image Include="resources\textures\skybox\top.jpg">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="resources\textures\checkers.png">
       <Filter>Resource Files</Filter>
     </Image>
   </ItemGroup>

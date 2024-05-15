@@ -140,7 +140,6 @@
     <ClCompile Include="src\graphics\shapes\cube.cpp" />
     <ClCompile Include="src\graphics\shapes\sphere.cpp" />
     <ClCompile Include="src\core\player.cpp" />
-    <ClCompile Include="src\level\gameLevel.cpp" />
     <ClCompile Include="src\resource\resourceManager.cpp" />
     <ClCompile Include="src\core\game.cpp" />
     <ClCompile Include="src\graphics\camera.cpp" />
@@ -166,7 +165,6 @@
     <ClInclude Include="include\EBO.h" />
     <ClInclude Include="include\game.h" />
     <ClInclude Include="include\cube.h" />
-    <ClInclude Include="include\gameLevel.h" />
     <ClInclude Include="include\player.h" />
     <ClInclude Include="include\resourceManager.h" />
     <ClInclude Include="include\shader.h" />
@@ -178,6 +176,7 @@
   <ItemGroup>
     <Image Include="resources\textures\block.png" />
     <Image Include="resources\textures\block_solid.png" />
+    <Image Include="resources\textures\checkers.png" />
     <Image Include="resources\textures\earth.jpg" />
     <Image Include="resources\textures\earth2.jpg" />
     <Image Include="resources\textures\earthp.jpg" />

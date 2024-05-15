@@ -3,7 +3,6 @@
 #include <texture.h>
 #include <VAO.h>
 #include <resourceManager.h>
-#include <gameLevel.h>
 #include <GLFW/glfw3.h>
 #include <iomanip>
 #include <sphere.h>
@@ -42,7 +41,7 @@ void Game::Init()
 
 	player = new Player(glm::vec3(0.0f, 1.5f, 0.0f));
 	camera = new Camera(this->width, this->height, player);
-	skyboxCube = new Cube(glm::vec3(0), glm::vec3(10000));
+	skyboxCube = new Cube(glm::vec3(0, 0, 0), glm::vec3(10000));
 	lightSource = new Cube(glm::vec3(0), glm::vec3(0));
 	// light source direction is set in the fragment shader because it is like a sun not a point
 
