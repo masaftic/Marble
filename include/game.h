@@ -24,7 +24,8 @@ public:
 	// std::vector<GameLevel> Levels;
 	unsigned int levelNumber = 0;
 
-	std::vector<Cube> cubes;
+	// std::vector<Cube> cubes;
+	std::vector<std::vector<Cube>> levels;
 
 	Game(unsigned int width, unsigned int height);
 	~Game();

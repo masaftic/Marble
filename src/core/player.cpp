@@ -92,6 +92,7 @@ void Player::Update(float deltaTime, std::vector<Cube>& cubes)
 
             // Check if the player is on top of the cube
             if (this->position.y >= cubeTop && isCenterInsideCube) {
+
                 this->position.y = cubeTop + this->radius; // Adjust position to be on top of the cube
                 this->velocity.y = 0; // Player is grounded
                 isGrounded = true;
@@ -123,6 +124,28 @@ void Player::Update(float deltaTime, std::vector<Cube>& cubes)
     if (rotationAngle < -glm::pi<float>()) rotationAngle += 2 * glm::pi<float>();
 }
 
+
+
+bool Player::IsAtEnd(std::vector<Cube>& cubes)
+{
+    for (int i = 0; i < cubes.size(); i++) {
+        if (!cubes[i].isEnd) continue;
+        std::pair<bool, glm::vec3> collision = CheckCollision(cubes[i]);
+        if (collision.first) {
+            float cubeTop = cubes[i].position.y + cubes[i].size.y / 2;
+            float cubeLeft = cubes[i].position.x - cubes[i].size.x / 2;
+            float cubeRight = cubes[i].position.x + cubes[i].size.x / 2;
+            float cubeFront = cubes[i].position.z - cubes[i].size.z / 2;
+            float cubeBack = cubes[i].position.z + cubes[i].size.z / 2;
+
+            bool isCenterInsideCube = this->position.x > cubeLeft && this->position.x < cubeRight &&
+                this->position.z > cubeFront && this->position.z < cubeBack;
+
+            return glm::distance(this->position, cubes[i].position) <= this->radius + cubes[i].size.y;
+        }
+    }
+    return false;
+}
 
 
 void Player::Draw(Shader& shader, Texture& texture)

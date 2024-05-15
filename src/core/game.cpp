@@ -58,7 +58,7 @@ void Game::Init()
 
 	Cube::initRender();
 
-	cubes.push_back(Cube(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(5.0f, 1.0f, 5.0f)));
+  /*cubes.push_back(Cube(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(5.0f, 1.0f, 5.0f)));
 	cubes.push_back(Cube(glm::vec3(0.0f, 0.0f, 5.0f), glm::vec3(5.0f, 1.0f, 5.0f)));
 	cubes.push_back(Cube(glm::vec3(5.0f, 0.0f, 0.0f), glm::vec3(5.0f, 1.0f, 5.0f)));
 	cubes.push_back(Cube(glm::vec3(5.0f, 0.0f, 5.0f), glm::vec3(5.0f, 1.0f, 5.0f)));
@@ -91,7 +91,59 @@ void Game::Init()
 		poss.y += 2;
 	}
 
+	cubes.back().isEnd = 1;*/
+	
+	/*{
+		std::vector<Cube> cubes;
+		glm::vec3 poss = glm::vec3(5.0f, 2.0f, 5.0f);
 
+		for (int ringSize = 6; ringSize > 0; ringSize--) {
+			for (int i = 0; i < ringSize; i++) {
+				poss.x += 5;
+				cubes.push_back(Cube(poss, glm::vec3(5.0f, 1.0f, 5.0f)));
+			}
+
+			for (int i = 0; i < ringSize; i++) {
+				poss.z += 5;
+				cubes.push_back(Cube(poss, glm::vec3(5.0f, 1.0f, 5.0f)));
+			}
+
+			for (int i = 0; i < ringSize; i++) {
+				poss.x -= 5;
+				cubes.push_back(Cube(poss, glm::vec3(5.0f, 1.0f, 5.0f)));
+			}
+
+			for (int i = 0; i < ringSize; i++) {
+				poss.z -= 5;
+				cubes.push_back(Cube(poss, glm::vec3(5.0f, 1.0f, 5.0f)));
+			}
+			poss.x += 10;
+			poss.z += 10;
+			poss.y += 2;
+		}
+		for (int i = 0; i < cubes.size(); i++) {
+			std::cout << cubes[i].position.x << " " << cubes[i].position.y << " " << cubes[i].position.z << " " << cubes[i].size.x << " " << cubes[i].size.y << " " << cubes[i].size.x << "\n";
+		}
+	}*/
+	
+	for (int levelNum = 1; levelNum <= 1; levelNum++) {
+		std::ifstream levelFile("resources/levels/level" + std::to_string(levelNum) + ".txt");
+		if (!levelFile.good()) {
+			std::cout << "BAD\n";
+		}
+		std::vector<Cube> cubes;
+		std::string line;
+		while (std::getline(levelFile, line)) {
+			std::istringstream iss(line);
+			float x, y, z, sizeX, sizeY, sizeZ;
+			if (!(iss >> x >> y >> z >> sizeX >> sizeY >> sizeZ)) { break; } // error
+			cubes.push_back(Cube(glm::vec3(x, y, z), glm::vec3(sizeX, sizeY, sizeZ)));
+		}
+		levels.push_back(cubes);
+		levels[levelNum - 1].back().isEnd = 1;
+	}
+
+	
 
 	//// load textures
 	ResourceManager::LoadTexture("resources/textures/rock.png", true, "rock");
@@ -163,7 +215,11 @@ void Game::ProcessInput(GLFWwindow* window, float dt)
 
 void Game::Update(float dt)
 {	
-	player->Update(dt, cubes);
+	player->Update(dt, levels[levelNumber]);
+	if (player->IsAtEnd(levels[levelNumber])) {
+		std::cout << "END\n";
+		// goto next level;
+	}
 	if (player->position.y < -10) {
 		Reset();
 	}
@@ -175,6 +231,7 @@ void Game::Render()
 	Texture block_solid = ResourceManager::GetTexture("block_solid");
 	Texture rock = ResourceManager::GetTexture("rock");
 	Texture skyboxTexture = ResourceManager::GetTexture("skybox");
+	Texture checkersTexture = ResourceManager::GetTexture("checkers");
 
 	Shader defaultShader = ResourceManager::GetShader("default");
 	Shader lightShader = ResourceManager::GetShader("light");
@@ -212,8 +269,13 @@ void Game::Render()
 	defaultShader.setVec3("lightPos", lightSource->position);
 	defaultShader.setVec3("camPos", camera->position);
 
-	for (int i = 0; i < cubes.size(); i++) {
-		cubes[i].Draw(defaultShader, block_solid);
+	for (int i = 0; i < levels[levelNumber].size(); i++) {
+		if (levels[levelNumber][i].isEnd) {
+			levels[levelNumber][i].Draw(defaultShader, checkersTexture);
+		}
+		else {
+			levels[levelNumber][i].Draw(defaultShader, block_solid);
+		}
 	}
 
 	player->Draw(defaultShader, rock);

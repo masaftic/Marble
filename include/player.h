@@ -37,7 +37,7 @@ public:
     void Update(float deltaTime, std::vector<Cube>& cubes);
 
 
-
+    bool IsAtEnd(std::vector<Cube>& cubes);
 
     void Draw(Shader& shader, Texture& texture);
 
