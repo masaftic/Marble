@@ -38,52 +38,24 @@ void Camera::Inputs(GLFWwindow* window, float dt)
 		if (this->distanceFromPlayer > 3)
 			this->distanceFromPlayer -= this->speed;
 	}
-
-	if (glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS)
-	{
-		speed = 0.1f;
-	}
-	else if (glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_RELEASE)
-	{
-		speed = 0.03f;
-	}
+	
 	// Handles mouse inputs
-	if (glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_LEFT) == GLFW_PRESS)
-	{
-		// Hides mouse cursor
-		glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_HIDDEN);
+	// Stores the coordinates of the cursor
+	double mouseX;
+	double mouseY;
+	// Fetches the coordinates of the cursor
+	glfwGetCursorPos(window, &mouseX, &mouseY);
 
-		// Prevents camera from jumping on the first click
-		if (firstClick)
-		{
-			glfwSetCursorPos(window, (width / 2), (height / 2));
-			firstClick = false;
-		}
+	float rotY = sensitivity * (float)(mouseY - (height / 2)) / height;
+	float rotX = sensitivity * (float)(mouseX - (width / 2)) / width;
 
-		// Stores the coordinates of the cursor
-		double mouseX;
-		double mouseY;
-		// Fetches the coordinates of the cursor
-		glfwGetCursorPos(window, &mouseX, &mouseY);
-
-		float rotY = sensitivity * (float)(mouseY - (height / 2)) / height;
-		float rotX = sensitivity * (float)(mouseX - (width / 2)) / width;
-
-		if (abs(this->pitch + rotY) <= 85) {
-			this->pitch += rotY;
-		}
-		this->angleAroundPlayer += -rotX * speed * 0.7f;
-
-		// Sets mouse cursor to the middle of the screen so that it doesn't end up roaming around
-		glfwSetCursorPos(window, (width / 2), (height / 2));
+	if (abs(this->pitch + rotY) <= 85) {
+		this->pitch += rotY;
 	}
-	else if (glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_LEFT) == GLFW_RELEASE)
-	{
-		// Unhides cursor since camera is not looking around anymore
-		glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
-		// Makes sure the next time the camera looks around it doesn't jump
-		firstClick = true;
-	}
+	this->angleAroundPlayer += -rotX * speed * 0.7f;
+
+	// Sets mouse cursor to the middle of the screen so that it doesn't end up roaming around
+	glfwSetCursorPos(window, (width / 2), (height / 2));
 	
 	float horizontalDistance = CalculateHorizontalDistance();
 	float verticalDistance = CalculateVerticalDistance();

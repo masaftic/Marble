@@ -6,14 +6,6 @@
 #include "game.h"
 
 
-void framebuffer_size_callback(GLFWwindow* window, int width, int height);
-
-const unsigned int SCREEN_WIDTH  = 1000;
-const unsigned int SCREEN_HEIGHT = 800;
-
-Game Marble(SCREEN_WIDTH, SCREEN_HEIGHT);
-
-
 int main()
 {
     // Initialize GLFW
@@ -28,7 +20,13 @@ int main()
     glfwWindowHint(GLFW_SAMPLES, 4);
 
     // Create a GLFWwindow object of width by height pixels, naming it "Marble"
-    GLFWwindow* window = glfwCreateWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "Marble", NULL, NULL);
+    GLFWmonitor* monitor = glfwGetPrimaryMonitor(); // Get the primary monitor
+    const GLFWvidmode* mode = glfwGetVideoMode(monitor); // Get the current video mode of the monitor
+
+    // Create a full-screen window
+    GLFWwindow* window = glfwCreateWindow(mode->width, mode->height, "My Window", monitor, NULL);
+    Game Marble(mode->width, mode->height);
+
     // Error check if the window fails to create
     if (window == NULL)
     {
@@ -38,8 +36,7 @@ int main()
     }
     // Introduce the window into the current context
     glfwMakeContextCurrent(window);
-
-    glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
+    glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_HIDDEN);
 
     if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
         std::cout << "Failed to load GLAD" << std::endl;
@@ -48,7 +45,7 @@ int main()
     }
 
 
-    glViewport(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
+    glViewport(0, 0, mode->width, mode->height);
     glEnable(GL_BLEND);
     glEnable(GL_DEPTH_TEST);
     glEnable(GL_MULTISAMPLE);
@@ -61,7 +58,6 @@ int main()
     int frameCount = 0;
     float lastTime = glfwGetTime();
     
-    glfwSwapInterval(1);
 
     // Main while loop
     while (!glfwWindowShouldClose(window))
@@ -90,7 +86,6 @@ int main()
             deltaTime = 0.15f;
 
 
-
         glfwPollEvents();
 
         Marble.ProcessInput(window, deltaTime); 
@@ -107,15 +102,5 @@ int main()
     glfwDestroyWindow(window);
     glfwTerminate();
     return 0;
-}
-
-
-void framebuffer_size_callback(GLFWwindow* window, int width, int height)
-{
-    // make sure the viewport matches the new window dimensions; note that width and 
-    // height will be significantly larger than specified on retina displays.
-
-    Marble.UpdateResolution(width, height);
-    glViewport(0, 0, width, height);
 }
 

@@ -29,14 +29,6 @@ Game::~Game()
 	delete camera;
 }
 
-void Game::UpdateResolution(int width, int height)
-{
-	this->width = width;
-	this->height = height;
-	camera->width = width;
-	camera->height = height;
-}
-
 
 void Game::Init()
 {
@@ -155,7 +147,7 @@ void Game::Update(float dt)
 		if (levelNumber == 3) {
 			levelNumber = 0;
 		}
-		levelNumber++;
+		else levelNumber++;
 		Reset();
 	}
 	if (player->position.y < -10) {
