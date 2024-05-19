@@ -1,4 +1,4 @@
-# 3rd Person Camera Platformer Game with Skybox
+# 3rd Person Camera Platformer Game
 
 ## Overview
 
@@ -13,7 +13,7 @@ This project is a 3rd person camera platformer game implemented using OpenGL and
 ## Requirements
 
 To build and run the game, you will need:
-- Visual Studio
+- Visual Studio.
 
 ## How to Build
 
