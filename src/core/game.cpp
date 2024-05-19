@@ -84,14 +84,14 @@ void Game::Init()
 			} // error
 			cubes.push_back(Cube(glm::vec3(x, y, z), glm::vec3(sizeX, sizeY, sizeZ)));
 		}
-		levels.push_back(cubes);
-		levels[levelNum - 1].back().isEnd = 1;
+		levelCubes.push_back(cubes);
+		levelCubes[levelNum - 1].back().isEnd = 1;
 	}
 }
 
 void Game::Reset()
 {
-	player->position = levels[levelNumber][0].position;
+	player->position = levelCubes[levelNumber][0].position;
 	player->position.y += 2;
 	player->velocity = glm::vec3(0);
 
@@ -140,8 +140,8 @@ void Game::ProcessInput(GLFWwindow* window, float dt)
 
 void Game::Update(float dt)
 {	
-	player->Update(dt, levels[levelNumber]);
-	if (player->IsAtEnd(levels[levelNumber])) {
+	player->Update(dt, levelCubes[levelNumber]);
+	if (player->IsAtEnd(levelCubes[levelNumber])) {
 		// goto next level;
 		if (levelNumber == 3) {
 			levelNumber = 0;
@@ -198,14 +198,16 @@ void Game::Render()
 	defaultShader.setVec3("lightPos", lightSource->position);
 	defaultShader.setVec3("camPos", camera->position);
 
-	for (int i = 0; i < levels[levelNumber].size(); i++) {
-		if (levels[levelNumber][i].isEnd) {
-			levels[levelNumber][i].Draw(defaultShader, checkersTexture);
+	for (int i = 0; i < levelCubes[levelNumber].size(); i++) {
+		if (levelCubes[levelNumber][i].isEnd) {
+			levelCubes[levelNumber][i].Draw(defaultShader, checkersTexture);
 		}
 		else {
-			levels[levelNumber][i].Draw(defaultShader, block_solid);
+			levelCubes[levelNumber][i].Draw(defaultShader, block_solid);
 		}
 	}
+
+
 
 	player->Draw(defaultShader, rock);
 }

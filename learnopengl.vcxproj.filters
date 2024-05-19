@@ -75,6 +75,7 @@
     <None Include="resources\shaders\skybox.frag" />
     <None Include="resources\shaders\light.frag" />
     <None Include="resources\shaders\light.vert" />
+    <None Include="README.md" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\VBO.h">

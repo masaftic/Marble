@@ -22,7 +22,7 @@ public:
 	bool keys[1024];
 	unsigned int width, height;
 	unsigned int levelNumber = 0;
-	std::vector<std::vector<Cube>> levels;
+	std::vector<std::vector<Cube>> levelCubes;
 
 	Game(unsigned int width, unsigned int height);
 	~Game();

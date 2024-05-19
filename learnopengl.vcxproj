@@ -153,6 +153,7 @@
     <ClCompile Include="src\graphics\data\VBO.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="README.md" />
     <None Include="resources\shaders\default.frag" />
     <None Include="resources\shaders\default.vert" />
     <None Include="resources\shaders\light.frag" />
